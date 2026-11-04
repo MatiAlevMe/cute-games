@@ -48,7 +48,7 @@ fecha, tema celeste, mini-juegos y contenido privado separado.
 | `npm run test:e2e` | OK |
 | `npm run build` | OK |
 | Búsqueda de términos personales | Sin resultados en el árbol ni en el historial |
-| `git rev-list --all --count` | Un solo commit |
+| `git rev-list --all --count` | Un solo commit en la publicación inicial; sin historial heredado |
 | `npm run validate:release` | Falla a propósito: fecha `null` y textos de ejemplo |
 
 **No verificado:** revisión en Safari/VoiceOver, deploy y accesibilidad de los mini-juegos (no
