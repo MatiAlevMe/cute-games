@@ -12,6 +12,7 @@ fecha, tema celeste, mini-juegos y contenido privado separado.
 - Fases **P1, P2 y P3 completadas**. **P4 es el siguiente paso.**
 - El repositorio es público y solo contiene la demo neutra: sin nombres, fechas, textos ni assets
   personales.
+- Repo: `MatiAlevMe/cute-games` (público), rama `main`, un commit inicial.
 - No hay deploy: el sitio no está publicado en ningún hosting.
 - Licencia: **MIT**, solo para el código propio.
 - Contrato, menú por fecha, temas y mini-juegos: no implementados.
