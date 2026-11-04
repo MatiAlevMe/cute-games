@@ -12,8 +12,8 @@ componentes compartidos.
 
 ## Estado
 
-**Fase 1 completada: menú, cuatro vistas, accesibilidad, pruebas E2E y validación de release. Deploy
-diferido.**
+**Fase 2 en curso: P1–P4 completadas. El contrato `ContentBundle`, el validador y la migración de la
+demo están listos; el menú por fecha es P5. Deploy diferido.**
 
 La fase 2 separa el motor público del contenido privado: contrato `ContentBundle`, menú por fecha,
 tema configurable, mini-juegos y una demo neutra. El plan y el estado real están en
@@ -28,7 +28,7 @@ tema configurable, mini-juegos y una demo neutra. El plan y el estado real está
 | Build | Vite 8.3.5 + `@vitejs/plugin-react` 6.1.2 |
 | Estilos | CSS propio base; dirección visual pendiente |
 | Rutas | Hash routes (`#/`, `#/regalo/<id>`) |
-| Contenido | `src/content/site.ts` y `src/content/texts/`; textos de ejemplo |
+| Contenido | `ContentBundle` en `src/content/` y textos en `src/content/texts/`; demo de ejemplo |
 | Tests | Vitest 5.0.5 (unitarias) + Playwright 1.64.1 (E2E) |
 | Hosting | Sitio estático con HTTPS; proveedor pendiente |
 | Licencia | MIT |
@@ -54,14 +54,15 @@ externos. `npm run test:e2e` construye el sitio, lo sirve con `vite preview` y r
 vistas, retorno, ruta inválida, teclado, movimiento reducido y los cuatro anchos de referencia. La
 primera vez hay que instalar el navegador de Playwright con `npx playwright install chromium`.
 
-La fecha de la demo no está configurada y los textos son de ejemplo: `npm run validate:release` falla
-a propósito hasta que se reemplacen. El build normal sigue funcionando para desarrollo.
+La demo usa una fecha y textos de ejemplo. `npm run validate:release` sigue fallando a propósito: su
+lector todavía apunta al contrato anterior y la reescritura sobre el bundle es P9. El build normal
+sigue funcionando para desarrollo.
 
 ## Usar la plantilla
 
 1. Clona o forkea este repositorio.
 2. Crea un repositorio **privado** para tu contenido real y usa este como `upstream`.
-3. Reemplaza `src/content/site.ts` y `src/content/texts/`.
+3. Reemplaza `src/content/demo.ts` y `src/content/texts/` por tu bundle y tus textos.
 4. Revisa el resultado en local y construye el sitio.
 
 El contenido personal no se publica en este repositorio. Un repositorio privado no es control de
@@ -72,8 +73,9 @@ acceso: un build estático contiene el contenido y es legible si se sirve en la 
 ## Editar los textos
 
 La carta, el poema, el mensaje del anillo y la felicitación están en `src/content/texts/` como
-archivos `.txt` separados. Los actuales son de ejemplo y deben reemplazarse por el contenido real.
-El formato de cada archivo está documentado en
+archivos `.txt` separados. Las definiciones de cada regalo —`id`, `kind`, título, `order` y asset—
+viven en el `ContentBundle` de `src/content/demo.ts`. Los textos y la fecha actuales son de ejemplo y
+deben reemplazarse por el contenido real. El formato de cada archivo está documentado en
 [`docs/work/regalo-publico/CONTENT.md`](docs/work/regalo-publico/CONTENT.md).
 
 ## Rutas

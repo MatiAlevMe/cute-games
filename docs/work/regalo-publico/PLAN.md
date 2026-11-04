@@ -1,7 +1,7 @@
 # PLAN — regalo-publico
 
 **Slug:** `regalo-publico` · **Actualizado:** `2026-11-04`
-**Estado:** `P1 y P2 completadas; P3 siguiente`
+**Estado:** `P1–P4 completadas; P5 siguiente`
 **Puerta de privacidad:** [`PRIVACY.md`](PRIVACY.md) · **Repos:** [`REPOS.md`](REPOS.md)
 
 ## Objetivo
@@ -84,7 +84,7 @@ interface ContentBundle {
 | P1 | Licencia MIT y avisos | ✅ |
 | P2 | Contenido público y privado separados | ✅ |
 | P3 | Demo neutra y publicación de la plantilla | ✅ |
-| P4 | Contrato `ContentBundle` y migración | ⏳ |
+| P4 | Contrato `ContentBundle` y migración | ✅ |
 | P5 | Menú por fecha y bienvenida | ⏳ |
 | P6 | Tema celeste y fallback original | ⏳ |
 | P7 | Mini-juego memoria del robot | ⏳ |
@@ -132,6 +132,9 @@ interface ContentBundle {
   precedencia de bienvenida y el orden son deterministas; una ruta inválida sigue recuperándose.
 - **Verificación:** `npm run typecheck`, pruebas unitarias de validación/orden/fechas/duplicados/
   bienvenida, `npm run test:e2e` y `npm run build`.
+- **Estado:** completada. El bundle vive en `src/content/demo.ts`; el contrato y los helpers en
+  `src/content/`; el registro solo mapea vistas. `validate:release` sigue pendiente de reescritura
+  (P9).
 - **Riesgos:** migración grande; no mezclar el rediseño del menú ni los juegos en esta fase.
 
 ### P5 — Menú por fecha y bienvenida
@@ -194,3 +197,5 @@ interface ContentBundle {
   tema alternativo opcional y mini-juegos MVP.
 - `2026-11-04` — P1 y P2 completadas; se publica la plantilla pública con historial nuevo y demo
   neutra.
+- `2026-11-04` — P4 completada: contrato `ContentBundle`, validador, orden y bienvenida
+  deterministas, demo migrada y registro de vistas sin contenido.

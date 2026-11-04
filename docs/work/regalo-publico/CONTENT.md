@@ -1,7 +1,8 @@
 # Guía de textos — regalo-publico
 
-Los textos visibles viven en `src/content/texts/`, separados de las vistas. No hay CMS ni editor
-web: para cambiarlos se edita el archivo, se revisa en local y se vuelve a construir el sitio.
+Los textos visibles viven en `src/content/texts/`, separados de las vistas. Las definiciones de cada
+regalo y su fecha viven en el `ContentBundle` de `src/content/demo.ts`. No hay CMS ni editor web: para
+cambiarlos se edita el archivo, se revisa en local y se vuelve a construir el sitio.
 
 > **Límite público/privado:** este repositorio es público y sus textos son de ejemplo. Los textos de
 > un regalo real no se copian aquí, ni a los fixtures, ni al build. Vive en un repositorio privado
@@ -58,9 +59,9 @@ publicado:** hay que volver a construir y desplegar.
 ## Cómo se conectan
 
 1. `src/content/texts.ts` importa los `.txt` con `?raw` y los convierte en datos tipados.
-2. `src/gifts/registry.ts` asigna esos datos a cada regalo (`paragraphs`, `stanzas` o `message`).
-   Tras la migración al `ContentBundle`, `App` resolverá el bundle y el registro solo mapeará `kind`
-   a la vista; el registro no importará contenido.
+2. `src/content/demo.ts` asigna esos datos a cada regalo dentro del `ContentBundle` (`paragraphs`,
+   `stanzas` o `message`). `App` recibe el bundle y resuelve ocasiones, bienvenida y regalo; el
+   registro de vistas solo mapea `kind` a la vista y no importa contenido.
 3. `LetterView`, `PoemView`, `RingView` y `AchievementView` renderizan esos datos; no contienen copy
    definitivo.
 
@@ -74,5 +75,5 @@ pendiente explícito en lugar de una pantalla rota.
 - [ ] `npm run typecheck`, `npm run test`, `npm run test:e2e` y `npm run build` pasan.
 - [ ] `npm run validate:release` pasa (fecha y textos definitivos).
 - [ ] Se revisaron las rutas en 320, 375, 768 y 1024 px sin scroll horizontal.
-- [ ] La fecha real está configurada (`occasions.ts` en fase 2; hoy `src/content/site.ts`).
+- [ ] La fecha real está configurada en `Occasion.date` (`src/content/demo.ts`).
 - [ ] El build personal no se publica y se revisa solo en local.

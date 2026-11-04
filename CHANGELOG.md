@@ -2,6 +2,16 @@
 
 ## 2026-11-04
 
+- Se implementa P4: contrato `ContentBundle` con `site` y `occasions`, tipos `SiteConfig`, `Occasion` y
+  `ThemeConfig`, y bundle de demo en `src/content/demo.ts`.
+- Se añade un validador de bundle: IDs `^[a-z0-9-]+$`, unicidad de IDs de regalo, fechas calendario,
+  `kind` existente en `giftViewRegistry` y assets locales con `alt` o `decorative`.
+- Se migran los textos y las definiciones de regalos al bundle; `App` recibe el bundle y el registro
+  de vistas solo mapea `kind` a componente.
+- Se fijan el orden determinista de ocasiones y regalos y la precedencia de `Occasion.welcome` sobre
+  `SiteConfig.welcome`.
+- Se actualizan fixtures y pruebas unitarias/E2E. `validate:release` sigue pendiente de reescritura
+  para el bundle (P9).
 - Se publica la plantilla pública `cute-games` con historial nuevo. El árbol contiene solo la demo
   neutra: sin nombres, fechas, textos ni assets personales.
 - Se separa la documentación pública de la privada: el contenido real de un regalo vive en un

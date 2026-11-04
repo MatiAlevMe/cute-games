@@ -36,8 +36,8 @@ nuevo y empuja el contenido ahí.
    git remote add origin git@github.com:<usuario>/mi-regalo.git
    ```
 
-3. **Carga el contenido** en `src/content/site.ts` y `src/content/texts/`. Sigue
-   [`CONTENT.md`](CONTENT.md).
+3. **Carga el contenido** en el `ContentBundle` de `src/content/demo.ts` y en `src/content/texts/`.
+   Sigue [`CONTENT.md`](CONTENT.md).
 
 4. **Revisa en local** y construye:
 

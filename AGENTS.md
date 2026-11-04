@@ -13,8 +13,8 @@ Plantilla web para regalar: un menú con la fecha del regalo y cuatro vistas de 
 anillo y logro). El objetivo es que otra persona pueda clonar el repositorio, reemplazar el contenido
 y publicar su propio regalo sin tocar los componentes.
 
-**Estado actual:** fase 1 completada (menú, cuatro vistas, accesibilidad, pruebas y validación de
-release). La fase 2 separa el motor público del contenido privado. Licencia MIT.
+**Estado actual:** fase 2 en curso. P1–P4 completadas (contrato `ContentBundle`, validador y
+migración de la demo); P5 siguiente. Licencia MIT.
 
 El repositorio es la **plantilla pública**: no contiene contenido personal. El contenido real de un
 regalo vive en un repositorio privado derivado de esta plantilla.
@@ -77,13 +77,12 @@ npm run build:release
 
 `npm run build` ejecuta el typecheck y genera el sitio estático en `dist/`. `npm run test` ejecuta
 las pruebas unitarias con Vitest. `npm run test:e2e` construye el sitio y ejecuta Playwright; la
-primera vez requiere `npx playwright install chromium`. `npm run validate:release` falla si
-`giftDate` es `null`, si un texto sigue siendo el de ejemplo o si queda contenido pendiente;
-`npm run build:release` encadena esa validación con el build.
+primera vez requiere `npx playwright install chromium`. `npm run validate:release` sigue leyendo el
+contrato de fase 1 y falla a propósito mientras no se reescriba; `npm run build:release` encadena esa
+validación con el build.
 
-La validación anterior es de fase 1. Al implementar `ContentBundle`, `validate:release` deberá
-validar el bundle y auditar el `dist`, con reglas distintas para la demo pública y la instancia
-personal.
+La validación es de fase 1. Al reescribirla en P9, `validate:release` deberá validar el bundle y
+auditar el `dist`, con reglas distintas para la demo pública y la instancia personal.
 
 ---
 
