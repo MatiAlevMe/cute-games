@@ -1,10 +1,22 @@
 import type { GiftDefinition } from '../gifts/types'
 import type { ContentBundle, Occasion } from './types'
 
+function compareText(left: string, right: string): number {
+  if (left < right) {
+    return -1
+  }
+
+  if (left > right) {
+    return 1
+  }
+
+  return 0
+}
+
 /** Orden determinista: fecha ascendente y, si empatan, por `id`. */
 export function sortOccasions(occasions: readonly Occasion[]): Occasion[] {
   return [...occasions].sort(
-    (left, right) => left.date.localeCompare(right.date) || left.id.localeCompare(right.id),
+    (left, right) => compareText(left.date, right.date) || compareText(left.id, right.id),
   )
 }
 
