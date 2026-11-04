@@ -11,6 +11,8 @@ interface GiftBase {
   title: string
   menuLabel: string
   asset?: GiftAsset
+  /** Posición dentro de su ocasión; si falta, se usa el orden del array. */
+  order?: number
 }
 
 export type GiftDefinition =
