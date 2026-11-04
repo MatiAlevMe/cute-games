@@ -1,0 +1,5 @@
+Esta es una carta de ejemplo.
+
+La plantilla no incluye contenido personal: reemplaza este archivo por tu propia carta. Cada bloque separado por una línea en blanco se muestra como un párrafo.
+
+Puedes escribir tanto como quieras. La vista conserva los saltos de línea y el formato del texto.

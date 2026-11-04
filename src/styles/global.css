@@ -1,0 +1,206 @@
+﻿:root {
+  color-scheme: light;
+  --color-text: #1b1b1b;
+  --color-background: #ffffff;
+  --color-surface: #f7f7f7;
+  --color-surface-hover: #ececec;
+  --color-border: #767676;
+  --color-focus: #005fcc;
+  --radius: 0.5rem;
+  --page-max: 60rem;
+  --reading-max: 38rem;
+  --touch-target: 2.75rem;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-wrap: break-word;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+/* Foco visible para enlaces; el :not(:focus-visible) evita el anillo con ratón. */
+a:focus {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.page {
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+/* El destino de “Saltar al contenido” no es interactivo: no necesita anillo. */
+main:focus {
+  outline: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-background);
+  color: var(--color-text);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.menu-header {
+  margin-bottom: 1.5rem;
+}
+
+.gift-date {
+  margin: 0.5rem 0 0;
+  font-size: 1.125rem;
+}
+
+.gift-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gift-card {
+  display: flex;
+  align-items: center;
+  min-height: 4.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .gift-card:hover {
+    background: var(--color-surface-hover);
+  }
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--touch-target);
+  margin-bottom: 1.5rem;
+}
+
+.pending {
+  max-width: var(--reading-max);
+  margin: 1.5rem 0 0;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.letter,
+.poem {
+  max-width: var(--reading-max);
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.letter__paragraph {
+  margin: 0 0 1.25em;
+  white-space: pre-line;
+}
+
+.letter__paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.poem__stanza {
+  margin: 0 0 1.75em;
+}
+
+.poem__stanza:last-child {
+  margin-bottom: 0;
+}
+
+.ring,
+.achievement {
+  max-width: var(--reading-max);
+  margin-top: 1.5rem;
+}
+
+.ring__asset,
+.achievement__asset {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 1.5rem;
+}
+
+.ring__message,
+.achievement__message {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 40rem) {
+  .page {
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .gift-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

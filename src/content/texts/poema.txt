@@ -1,0 +1,8 @@
+Este es un verso de ejemplo
+y este es otro verso de la misma estrofa
+
+La plantilla no trae un poema propio
+reemplaza estos versos por los tuyos
+
+Cada línea es un verso
+cada bloque separado es una estrofa
