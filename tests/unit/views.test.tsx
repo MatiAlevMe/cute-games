@@ -4,46 +4,7 @@ import { AchievementView } from '../../src/gifts/views/AchievementView'
 import { LetterView } from '../../src/gifts/views/LetterView'
 import { PoemView } from '../../src/gifts/views/PoemView'
 import { RingView } from '../../src/gifts/views/RingView'
-import type { GiftDefinition } from '../../src/gifts/types'
-
-const letterGift: GiftDefinition = {
-  id: 'carta',
-  kind: 'letter',
-  title: 'Carta',
-  menuLabel: 'Carta',
-  content: {
-    paragraphs: ['Primer párrafo.', 'Segundo párrafo\ncon un salto interno.'],
-  },
-}
-
-const poemGift: GiftDefinition = {
-  id: 'poema',
-  kind: 'poem',
-  title: 'Poema',
-  menuLabel: 'Poema',
-  content: {
-    stanzas: [
-      ['Primer verso.', 'Segundo verso.'],
-      ['Tercer verso.', 'Cuarto verso.', 'Quinto verso.'],
-    ],
-  },
-}
-
-const ringGift: GiftDefinition = {
-  id: 'anillo',
-  kind: 'ring',
-  title: 'Anillo',
-  menuLabel: 'Anillo',
-  content: { message: 'Mensaje de prueba.' },
-}
-
-const achievementGift: GiftDefinition = {
-  id: 'logro',
-  kind: 'achievement',
-  title: 'Logro',
-  menuLabel: 'Logro',
-  content: { message: 'Felicitación de prueba.' },
-}
+import { achievementGift, letterGift, poemGift, ringGift } from './fixtures'
 
 describe('LetterView', () => {
   it('renderiza un párrafo por elemento y conserva el orden', () => {

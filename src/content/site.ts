@@ -1,48 +1,12 @@
-export interface SiteConfig {
-  recipient: string
-  giftDate: string | null
-  locale: string
-}
+import type { SiteConfig } from './types'
 
 /**
- * Valor neutro de la demo. Reemplázalo por el nombre de la persona en tu
- * contenido privado. La fecha se deja en null para no mostrar una fecha falsa.
+ * Configuración neutra de la demo. Reemplázala por el contenido de tu
+ * repositorio privado. La fecha vive en cada `Occasion`, no en el sitio.
  */
-export const site: SiteConfig = {
+export const demoSite: SiteConfig = {
   recipient: 'ti',
-  giftDate: null,
+  welcome: 'Esta es una demostración de la plantilla cute-games.',
   locale: 'es-CL',
-}
-
-const calendarDatePattern = /^(\d{4})-(\d{2})-(\d{2})$/
-
-/**
- * Formatea una fecha calendario `YYYY-MM-DD` sin convertirla a UTC, para que
- * el día no cambie según la zona horaria.
- */
-export function formatGiftDate(date: string | null, locale: string): string | null {
-  if (date === null) {
-    return null
-  }
-
-  const match = calendarDatePattern.exec(date)
-
-  if (!match) {
-    throw new Error(`Fecha inválida: "${date}". Se espera el formato YYYY-MM-DD.`)
-  }
-
-  const year = Number(match[1])
-  const month = Number(match[2])
-  const day = Number(match[3])
-  const parsed = new Date(year, month - 1, day)
-
-  if (
-    parsed.getFullYear() !== year ||
-    parsed.getMonth() !== month - 1 ||
-    parsed.getDate() !== day
-  ) {
-    throw new Error(`Fecha inválida: "${date}".`)
-  }
-
-  return new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(parsed)
+  theme: { id: 'celeste' },
 }

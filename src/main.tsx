@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from './app/App'
+import { demoBundle } from './content/demo'
 import './styles/global.css'
 
 const rootElement = document.getElementById('root')
@@ -11,6 +12,6 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <App />
+    <App bundle={demoBundle} />
   </StrictMode>,
 )

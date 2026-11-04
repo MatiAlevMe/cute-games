@@ -1,18 +1,29 @@
 import { GiftCard } from './GiftCard'
-import type { GiftDefinition } from '../gifts/types'
+import { collectGifts } from '../content/bundle'
+import type { Occasion } from '../content/types'
 
 interface GiftMenuProps {
-  gifts: readonly GiftDefinition[]
+  occasions: readonly Occasion[]
   recipient: string
+  welcome: string
   giftDate: string | null
   dateLabel: string | null
 }
 
-export function GiftMenu({ gifts, recipient, giftDate, dateLabel }: GiftMenuProps) {
+export function GiftMenu({
+  occasions,
+  recipient,
+  welcome,
+  giftDate,
+  dateLabel,
+}: GiftMenuProps) {
+  const gifts = collectGifts(occasions)
+
   return (
     <section aria-labelledby="menu-title">
       <header className="menu-header">
         <h1 id="menu-title">Regalo para {recipient}</h1>
+        {welcome ? <p className="menu-welcome">{welcome}</p> : null}
         {dateLabel && giftDate ? (
           <p className="gift-date">
             <time dateTime={giftDate}>{dateLabel}</time>

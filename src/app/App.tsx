@@ -2,25 +2,39 @@ import { useEffect, useRef } from 'react'
 import { GiftLayout } from '../components/GiftLayout'
 import { GiftMenu } from '../components/GiftMenu'
 import { RouteNotFound } from '../components/RouteNotFound'
-import { formatGiftDate, site } from '../content/site'
-import { getGift, giftViewRegistry, gifts } from '../gifts/registry'
+import { findGift, resolveWelcome, sortOccasions } from '../content/bundle'
+import { formatGiftDate } from '../content/date'
+import type { ContentBundle } from '../content/types'
+import { assertValidContentBundle } from '../content/validate'
+import { giftKinds, giftViewRegistry } from '../gifts/registry'
 import { useHashRoute } from './router'
 
-export function App() {
+interface AppProps {
+  bundle: ContentBundle
+}
+
+export function App({ bundle }: AppProps) {
+  assertValidContentBundle(bundle, { knownKinds: giftKinds })
+
   const route = useHashRoute()
   const mainRef = useRef<HTMLElement>(null)
   const previousHashRef = useRef<string | null>(null)
-  const dateLabel = formatGiftDate(site.giftDate, site.locale)
-  const currentGift = route.name === 'gift' ? getGift(route.id) : undefined
+  const occasions = sortOccasions(bundle.occasions)
+  const firstOccasion = occasions[0]
+  const welcome = resolveWelcome(bundle, firstOccasion)
+  const dateLabel = firstOccasion
+    ? formatGiftDate(firstOccasion.date, bundle.site.locale)
+    : null
+  const currentGift = route.name === 'gift' ? findGift(bundle, route.id) : undefined
 
   useEffect(() => {
     document.title =
       route.name === 'menu'
-        ? `Regalo para ${site.recipient}`
+        ? `Regalo para ${bundle.site.recipient}`
         : `${
             route.name === 'gift' ? (currentGift?.title ?? 'Ruta no encontrada') : 'Ruta no encontrada'
-          } — Regalo para ${site.recipient}`
-  }, [currentGift, route.name])
+          } — Regalo para ${bundle.site.recipient}`
+  }, [bundle.site.recipient, currentGift, route.name])
 
   /**
    * Al cambiar de ruta, mueve el foco al contenido principal para que la nueva
@@ -58,13 +72,14 @@ export function App() {
       <main id="contenido" className="page" tabIndex={-1} ref={mainRef}>
         {route.name === 'menu' ? (
           <GiftMenu
-            gifts={gifts}
-            recipient={site.recipient}
-            giftDate={site.giftDate}
+            occasions={occasions}
+            recipient={bundle.site.recipient}
+            welcome={welcome}
+            giftDate={firstOccasion?.date ?? null}
             dateLabel={dateLabel}
           />
         ) : route.name === 'gift' ? (
-          <GiftRoute id={route.id} />
+          <GiftRoute bundle={bundle} id={route.id} />
         ) : (
           <RouteNotFound />
         )}
@@ -73,8 +88,8 @@ export function App() {
   )
 }
 
-function GiftRoute({ id }: { id: string }) {
-  const gift = getGift(id)
+function GiftRoute({ bundle, id }: { bundle: ContentBundle; id: string }) {
+  const gift = findGift(bundle, id)
 
   if (!gift) {
     return <RouteNotFound />
@@ -88,4 +103,3 @@ function GiftRoute({ id }: { id: string }) {
     </GiftLayout>
   )
 }
-
