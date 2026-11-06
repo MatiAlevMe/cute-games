@@ -21,10 +21,10 @@ navegación ni los componentes compartidos.
 - **Infraestructura documental:** creada.
 - **Aplicación:** scaffold, menú, registro y navegación hash implementados (F1-T05).
 - **Vistas de contenido:** las cuatro implementadas (F1-T06 a F1-T08) con textos de ejemplo.
-- **Estilos y accesibilidad:** base implementada (F1-T09), verificada en Chrome; Safari/VoiceOver
+- **Estilos y accesibilidad:** base adaptable implementada (F1-T09), verificada en Chrome; Safari/VoiceOver
   pendientes.
 - **Pruebas y release:** Vitest, Playwright y `validate:release` implementados (F1-T10).
-- **Fase 2:** en curso; P1–P8 completadas y P9 siguiente.
+- **Fase 2:** completada; P1–P9 completadas.
 - **Privacidad:** este repositorio es público y solo contiene la demo. El contenido real de un regalo
   va en un repositorio privado derivado de la plantilla. Un repo privado no es control de acceso.
 - **Fecha y textos:** la demo usa una fecha y textos de ejemplo. El contenido real se edita en
@@ -36,7 +36,7 @@ navegación ni los componentes compartidos.
 |---|---|
 | UI | React 19.3.1 + TypeScript 7.0.2 |
 | Build | Vite 8.3.5 |
-| Estilos | CSS propio base; dirección visual pendiente |
+| Estilos | CSS propio adaptable, temas configurables y assets locales originales |
 | Rutas | Hash routes (`#/`, `#/regalo/<id>`) |
 | Contenido | `ContentBundle` en `src/content/` + archivos de texto en `src/content/texts/` |
 | Persistencia | Ninguna |
@@ -56,16 +56,16 @@ proyecto, hay que detenerse y explicar antes de reemplazarla.
    `ContentBundle`, no en el registro.
 4. **Contenido:** `ContentBundle` con `site` y `occasions`; fecha, etiquetas y textos separados de la
    presentación.
-5. **Vistas específicas:** carta, poema, anillo y logro.
+5. **Vistas específicas:** carta, poema, anillo, logro, memoria del robot y jardín de mensajes.
 6. **Estilos y assets:** reglas adaptables y recursos locales.
 
 No se resuelven componentes a partir de código arbitrario en datos. No hay sistema de plugins.
 
-Implementado hasta P8: arranque, shell, registro explícito de tipos, navegación hash, vistas de
-contenido, temas celeste/alternativo con paletas y arte local original, memoria del robot y jardín de
-mensajes; estilos accesibles, pruebas E2E con Playwright y validación de release de fase 1. La fase 2
-incluye el contrato `ContentBundle` con `site` y `occasions`, validador, orden determinista,
-precedencia de bienvenida, menú por línea de tiempo y fallback visual cuando falta un asset.
+Implementado hasta P9: arranque, shell, registro explícito de tipos, navegación hash, seis vistas,
+temas celeste/alternativo con paletas y arte local original, juegos accesibles, pruebas E2E con
+Playwright y validación de release por modo con auditoría de `dist/`. La fase 2 incluye el contrato
+`ContentBundle` con `site` y `occasions`, validador, orden determinista, precedencia de bienvenida,
+menú por línea de tiempo y fallback visual cuando falta un asset.
 
 ## Modelo de contenido
 
@@ -112,6 +112,8 @@ precedencia de bienvenida, menú por línea de tiempo y fallback visual cuando f
     componente estático; no importa contenido ni carga código desde los datos.
 11. **Validación de release:** debe validar el bundle y auditar el build, con reglas distintas para la
     demo pública y la instancia personal.
+12. **Release público:** la demo pública permitida se fija mediante una huella revisada; la instancia
+    personal requiere contenido completo, revisión manual y build local no publicado.
 
 ## Dónde está cada cosa
 

@@ -30,6 +30,7 @@ escribe.
 | Separar contenido público y privado | `work/regalo-publico/PRIVACY.md` |
 | Usar la plantilla en un repo privado | `work/regalo-publico/REPOS.md` |
 | Editar carta, poema, anillo o logro | `work/regalo-publico/CONTENT.md` |
+| Validar y auditar releases | `work/regalo-publico/RELEASE.md` |
 | Preparar assets | `work/regalo-publico/ASSETS.md` |
 | Crear un documento nuevo | `templates/PLAN.md` o `templates/HANDOFF.md` |
 | Ver lo que ya se hizo | `../CHANGELOG.md` |

@@ -13,8 +13,7 @@ Plantilla web para regalar: un menú con la fecha del regalo y cuatro vistas de 
 anillo y logro). El objetivo es que otra persona pueda clonar el repositorio, reemplazar el contenido
 y publicar su propio regalo sin tocar los componentes.
 
-**Estado actual:** fase 2 en curso. P1–P5 completadas (contrato `ContentBundle`, migración de la
-demo y menú por fecha); P6 siguiente. Licencia MIT.
+**Estado actual:** fase 2 completada (P1–P9). Licencia MIT.
 
 El repositorio es la **plantilla pública**: no contiene contenido personal. El contenido real de un
 regalo vive en un repositorio privado derivado de esta plantilla.
@@ -77,12 +76,9 @@ npm run build:release
 
 `npm run build` ejecuta el typecheck y genera el sitio estático en `dist/`. `npm run test` ejecuta
 las pruebas unitarias con Vitest. `npm run test:e2e` construye el sitio y ejecuta Playwright; la
-primera vez requiere `npx playwright install chromium`. `npm run validate:release` sigue leyendo el
-contrato de fase 1 y falla a propósito mientras no se reescriba; `npm run build:release` encadena esa
-validación con el build.
-
-La validación es de fase 1. Al reescribirla en P9, `validate:release` deberá validar el bundle y
-auditar el `dist`, con reglas distintas para la demo pública y la instancia personal.
+primera vez requiere `npx playwright install chromium`. `npm run build:release` construye y valida la
+demo pública; `npm run build:release:personal` valida una instancia personal y debe ejecutarse solo en
+su repo privado. Ambos auditan `dist/`; consulta `docs/work/regalo-publico/RELEASE.md`.
 
 ---
 
@@ -128,6 +124,10 @@ agente debe contrastarlo con los archivos y con Git.
 ## 6. Git
 
 - **Rama:** `feat/<descripcion>` o `fix/<descripcion>`, en español y ASCII.
+- **Modelo de ramas para este repo personal:** `main` es la única rama permanente de `origin`; las
+  ramas `feat/*` y `fix/*` se mantienen locales y se integran en `main` tras verificar. No crear
+  `develop` ni publicar ramas de trabajo salvo decisión explícita. Esta instrucción orienta a agentes;
+  para imponerlo en GitHub hay que configurar reglas del repositorio.
 - **Commits:** `tipo(scope): descripción` en español, atómicos.
 - **Push:** requiere aprobación explícita. No publicar contenido personal ni builds privados.
 - **No** commitear `.env`, credenciales, `node_modules/`, `dist/` ni reportes de test.

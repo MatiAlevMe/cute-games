@@ -45,8 +45,9 @@ nuevo y empuja el contenido ahí.
    npm install
    npm run dev
    npm run typecheck
-   npm run test
-   npm run build
+    npm run test
+    npm run build
+    npm run build:release:personal
    ```
 
 5. **Sube solo al repo privado:** `git push -u origin main`.
@@ -66,6 +67,8 @@ mano: duplica el mantenimiento.
 - El repo privado nunca se hace público ni se publica su build.
 - El contenido personal no se copia al repo público, a sus fixtures ni a su documentación.
 - El build personal se revisa en local; una URL oculta no es control de acceso.
+- `build:release:personal` comprueba que el bundle esté completo y audita el build local; no certifica
+  que el contenido sea privado y no autoriza a subir ni publicar `dist/`.
 - No uses `git push --mirror`, `git push --all` ni `git filter-repo` sobre el repo público.
 - No subas `dist/`, `node_modules/` ni `.env`.
 

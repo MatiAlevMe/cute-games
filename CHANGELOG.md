@@ -2,6 +2,16 @@
 
 ## 2026-11-06
 
+- Se completa P9: README con stack, licencia, guías de reutilización y captura neutra; se documenta
+  el release público/personal y los límites de la auditoría de privacidad.
+- `validate:release` valida el bundle contra la huella de demo pública revisada; el modo personal
+  exige contenido completo y bloquea marcadores de plantilla conocidos. Ambos auditan los artefactos
+  existentes de `dist/`, sus valores de contenido, assets locales y referencias HTTP externas.
+- Verificación P9: typecheck OK; 87 pruebas unitarias y 17 E2E OK; `build:release` público OK con 7
+  archivos auditados. El modo personal rechazó correctamente el contenido de demo; no se abrió el repo
+  privado. No se añadieron dependencias.
+- Se documenta el flujo recomendado para este repo personal: `main` como única rama permanente remota;
+  las ramas de trabajo quedan locales. No se crea una rama `develop`.
 - Se completa P8: se añade `message-garden`, con mensajes configurables desde `ContentBundle`; cada
   flor revela un mensaje que permanece visible hasta reiniciar. La demo queda pendiente por falta de
   contenido aprobado, y los mensajes ficticios viven únicamente en fixtures de prueba.

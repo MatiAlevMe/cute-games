@@ -1,22 +1,22 @@
 # cute-games
 
-Plantilla web para regalar: un menú con la fecha del regalo y cuatro vistas de ejemplo.
+Plantilla web estática para regalos: una línea de tiempo por fecha y seis tipos de vista reutilizables.
 
-1. **Carta:** texto largo en párrafos.
-2. **Poema:** versos y estrofas con formato legible.
-3. **Anillo:** presentación visual dedicada.
-4. **Logro:** felicitación por algo que quieras celebrar.
+1. **Carta** y **poema**, con formato de párrafos y estrofas.
+2. **Anillo** y **logro**, con contenido breve.
+3. **Memoria del robot** y **jardín de mensajes**, mini-juegos configurables.
 
 El diseño permite agregar regalos y, más adelante, mini-juegos, sin duplicar la navegación ni los
 componentes compartidos.
 
 ## Estado
 
-**Fase 2 en curso: P1–P4 completadas. El contrato `ContentBundle`, el validador y la migración de la
-demo están listos; el menú por fecha es P5. Deploy diferido.**
+**Fase 2: P1–P9 completadas.** La plantilla incluye `ContentBundle`, menú por fechas, temas, mini-juegos,
+guía de reutilización y validación diferenciada de releases. El despliegue de una instancia personal
+queda fuera de alcance.
 
 La fase 2 separa el motor público del contenido privado: contrato `ContentBundle`, menú por fecha,
-tema configurable, mini-juegos y una demo neutra. El plan y el estado real están en
+temas configurables, mini-juegos y demo neutra. El plan y el estado están en
 [`docs/work/regalo-publico/PLAN.md`](docs/work/regalo-publico/PLAN.md) y
 [`docs/work/regalo-publico/HANDOFF.md`](docs/work/regalo-publico/HANDOFF.md).
 
@@ -26,7 +26,7 @@ tema configurable, mini-juegos y una demo neutra. El plan y el estado real está
 |---|---|
 | UI | React 19.3.1 + TypeScript 7.0.2 |
 | Build | Vite 8.3.5 + `@vitejs/plugin-react` 6.1.2 |
-| Estilos | CSS propio base; dirección visual pendiente |
+| Estilos | CSS propio adaptable y accesible |
 | Rutas | Hash routes (`#/`, `#/regalo/<id>`) |
 | Contenido | `ContentBundle` en `src/content/` y textos en `src/content/texts/`; demo de ejemplo |
 | Tests | Vitest 5.0.5 (unitarias) + Playwright 1.64.1 (E2E) |
@@ -45,25 +45,27 @@ npm run test             # pruebas unitarias con Vitest
 npm run test:e2e         # build + pruebas E2E con Playwright
 npm run build            # typecheck + build estático en dist/
 npm run preview          # sirve dist/ localmente
-npm run validate:release # falla si falta fecha o quedan textos de ejemplo
-npm run build:release    # validación de release + build
+npm run validate:release # valida la huella pública y el dist/ ya construido
+npm run build:release    # build + validación de la demo pública
+npm run build:release:personal # build + validación de contenido completo; solo local
 ```
 
 `npm run build` genera `dist/index.html` y los assets con hash; no requiere backend ni servicios
-externos. `npm run test:e2e` construye el sitio, lo sirve con `vite preview` y recorre menú, cuatro
-vistas, retorno, ruta inválida, teclado, movimiento reducido y los cuatro anchos de referencia. La
-primera vez hay que instalar el navegador de Playwright con `npx playwright install chromium`.
+externos. `npm run test:e2e` construye el sitio, lo sirve con `vite preview` y recorre las vistas,
+retorno, ruta inválida, mini-juegos, teclado, movimiento reducido y los cuatro anchos de referencia.
+La primera vez hay que instalar el navegador de Playwright con `npx playwright install chromium`.
 
-La demo usa una fecha y textos de ejemplo. `npm run validate:release` sigue fallando a propósito: su
-lector todavía apunta al contrato anterior y la reescritura sobre el bundle es P9. El build normal
-sigue funcionando para desarrollo.
+La captura siguiente muestra el menú neutro de la demo:
+
+![Captura del menú público de cute-games](docs/work/regalo-publico/capturas/demo-menu.png)
 
 ## Usar la plantilla
 
-1. Clona o forkea este repositorio.
-2. Crea un repositorio **privado** para tu contenido real y usa este como `upstream`.
-3. Reemplaza `src/content/demo.ts` y `src/content/texts/` por tu bundle y tus textos.
-4. Revisa el resultado en local y construye el sitio.
+1. Crea un repositorio nuevo **privado** derivado de la plantilla; no uses un fork público para el contenido real.
+2. Configura este repositorio como `upstream` y el privado como `origin`.
+3. Reemplaza `src/content/demo.ts` y `src/content/texts/` con contenido aprobado y assets autorizados.
+4. Sigue [`REPOS.md`](docs/work/regalo-publico/REPOS.md), [`CONTENT.md`](docs/work/regalo-publico/CONTENT.md)
+   y [`RELEASE.md`](docs/work/regalo-publico/RELEASE.md); revisa el build personal solo en local.
 
 El contenido personal no se publica en este repositorio. Un repositorio privado no es control de
 acceso: un build estático contiene el contenido y es legible si se sirve en la web. Detalle en
@@ -80,8 +82,8 @@ deben reemplazarse por el contenido real. El formato de cada archivo está docum
 
 ## Rutas
 
-- `#/` — menú con los cuatro regalos.
-- `#/regalo/<id>` — detalle; ids de ejemplo: `carta`, `poema`, `anillo`, `logro`.
+- `#/` — menú cronológico con las ocasiones y regalos configurados.
+- `#/regalo/<id>` — detalle; ids de demo incluyen `carta`, `poema`, `anillo`, `logro`, `memoria-robot` y `jardin-mensajes`.
 - Cualquier otra ruta muestra un estado recuperable con retorno al menú.
 
 ## Accesibilidad
@@ -102,6 +104,7 @@ deben reemplazarse por el contenido real. El formato de cada archivo está docum
 | Ver el plan de la plantilla | [`docs/work/regalo-publico/PLAN.md`](docs/work/regalo-publico/PLAN.md) |
 | Usar la plantilla en un repo privado | [`docs/work/regalo-publico/REPOS.md`](docs/work/regalo-publico/REPOS.md) |
 | Editar los textos | [`docs/work/regalo-publico/CONTENT.md`](docs/work/regalo-publico/CONTENT.md) |
+| Validar y auditar un release | [`docs/work/regalo-publico/RELEASE.md`](docs/work/regalo-publico/RELEASE.md) |
 | Ver la política de assets | [`docs/work/regalo-publico/ASSETS.md`](docs/work/regalo-publico/ASSETS.md) |
 | Conocer las reglas para agentes | [`AGENTS.md`](AGENTS.md) |
 | Ver el mapa de docs | [`docs/README.md`](docs/README.md) |

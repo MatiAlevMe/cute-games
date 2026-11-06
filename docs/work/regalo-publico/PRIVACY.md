@@ -43,6 +43,10 @@ El detalle operativo está en [`REPOS.md`](REPOS.md).
 - Un build estático contiene el contenido que importa Vite; si se sirve en la web, es legible.
 - Un repositorio privado no es control de acceso.
 - El build personal se muestra en local y no se sube al repositorio.
+- `build:release:personal` comprueba contenido completo y audita el `dist`, pero no puede reconocer
+  datos personales arbitrarios; siempre se requiere revisión humana.
+- `build:release` en la plantilla pública solo acepta la huella de la demo neutra revisada. Cambiarla
+  requiere auditar el bundle y el build antes de actualizar la huella.
 - Si se publica, necesita autenticación real fuera del cliente.
 - Ocultar tarjetas, rutas o fechas no es seguridad.
 - No usar variables `VITE_*` para contenido sensible.

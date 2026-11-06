@@ -1,7 +1,7 @@
 # PLAN — regalo-publico
 
 **Slug:** `regalo-publico` · **Actualizado:** `2026-11-06`
-**Estado:** `P1–P8 completadas; P9 siguiente`
+**Estado:** `P1–P9 completadas`
 **Puerta de privacidad:** [`PRIVACY.md`](PRIVACY.md) · **Repos:** [`REPOS.md`](REPOS.md)
 
 ## Objetivo
@@ -89,7 +89,7 @@ interface ContentBundle {
 | P6 | Tema celeste y fallback original | ✅ |
 | P7 | Mini-juego memoria del robot | ✅ |
 | P8 | Mini-juego jardín de mensajes | ✅ |
-| P9 | Documentación, demo y release | ⏳ |
+| P9 | Documentación, demo y release | ✅ |
 
 ## Tareas
 
@@ -207,9 +207,23 @@ interface ContentBundle {
 
 - **Qué:** dejar la plantilla lista para portafolio y reutilización.
 - **Cómo:** README con stack, capturas, guía de contenido, licencia y demo; validación de release
-  separada para demo pública e instancia privada; auditoría del `dist`; recorrido desde un clon limpio.
-- **Criterio de aceptación:** otra persona puede forkear, reemplazar su contenido y construir sin tocar
-  componentes; la demo pública no contiene datos personales.
+  separada para demo pública e instancia privada; auditoría del `dist`; recorrido de reutilización
+  desde un clon limpio documentado.
+- **Criterio de aceptación:** otra persona puede crear un repo privado nuevo desde la plantilla,
+  reemplazar su contenido y construir sin tocar componentes; la demo pública no contiene datos
+  personales; cada modo valida el bundle y audita los
+  artefactos actuales. La demo pública usa una huella SHA-256 aprobada; la instancia personal bloquea
+  contenido pendiente y marcadores de plantilla conocidos. La revisión semántica de privacidad sigue
+  siendo manual: el validador no puede reconocer datos personales arbitrarios.
+- **Estado:** completada. README, capturas y guías de contenido, privacidad y release están enlazadas.
+  `validate:release` comprueba el bundle y la huella de demo, mientras `validate:release:personal`
+  exige contenido completo. Ambos auditan archivos y valores del `dist/` generado, assets locales y
+  referencias externas; ningún comando publica el build.
+- **Verificación:** `npm run typecheck` OK; `npm run test` OK (9 archivos, 87 pruebas);
+  `npm run test:e2e` OK (17 pruebas); `npm run build:release` OK (bundle, huella y 7 archivos de
+  `dist/`). `npm run validate:release:personal` rechazó correctamente el bundle público por valores
+  genéricos, marcadores y contenido pendiente. Captura verificada en
+  `docs/work/regalo-publico/capturas/demo-menu.png`.
 
 ## Riesgos
 
@@ -241,3 +255,6 @@ interface ContentBundle {
 - `2026-11-06` — P8 completada: jardín de mensajes configurable, con flores revelables, anuncios,
   reinicio, teclado y tacto. La demo queda pendiente por falta de mensajes aprobados; sin persistencia,
   backend, dependencias ni assets nuevos.
+- `2026-11-06` — P9 completada: README y capturas actualizados; guía de releases; validación de bundle
+  diferenciada por modo y auditoría del `dist` real. La demo pública queda fijada a una huella revisada;
+  el modo personal exige contenido completo y sigue requiriendo revisión manual de privacidad.

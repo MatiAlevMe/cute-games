@@ -62,6 +62,7 @@ npm run test
 npm run build
 npm run test:e2e
 npm run validate:release
+npm run build:release
 ```
 
 El build incorpora los textos al sitio estático. **Editar un `.txt` no actualiza un sitio ya
@@ -85,7 +86,8 @@ pendiente explícito en lugar de una pantalla rota.
 - [ ] Carta, poema, anillo y logro ya no contienen el texto de ejemplo.
 - [ ] El contenido coincide exactamente con la versión aprobada.
 - [ ] `npm run typecheck`, `npm run test`, `npm run test:e2e` y `npm run build` pasan.
-- [ ] `npm run validate:release` pasa (fecha y textos definitivos).
+- [ ] Para la demo pública, `npm run build:release` pasa con la huella revisada.
+- [ ] Para una instancia privada, `npm run build:release:personal` pasa y `dist/` se revisa solo en local.
 - [ ] Se revisaron las rutas en 320, 375, 768 y 1024 px sin scroll horizontal.
 - [ ] La fecha real está configurada en `Occasion.date` (`src/content/demo.ts`).
 - [ ] El build personal no se publica y se revisa solo en local.
