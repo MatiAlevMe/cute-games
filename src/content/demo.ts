@@ -13,7 +13,7 @@ export const demoBundle: ContentBundle = {
       id: 'demo',
       date: '2026-01-01',
       title: 'Demostración',
-      welcome: 'Explora los cuatro regalos de ejemplo.',
+      welcome: 'Explora los regalos de ejemplo.',
       gifts: [
         {
           id: 'carta',
@@ -42,6 +42,13 @@ export const demoBundle: ContentBundle = {
           title: 'Logro',
           menuLabel: 'Logro',
           content: achievementContent,
+        },
+        {
+          id: 'memoria-robot',
+          kind: 'robot-memory',
+          title: 'Memoria del robot',
+          menuLabel: 'Memoria del robot',
+          content: { pairs: ['1', '2', '3', '4'] },
         },
       ],
     },

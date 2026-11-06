@@ -75,6 +75,21 @@ function validateGift(
   if (gift.asset) {
     validateAsset(gift.asset, `${path}.asset`, problems)
   }
+
+  if (gift.kind === 'robot-memory' && gift.content) {
+    const pairs = gift.content.pairs
+    if (pairs.length < 2) {
+      problems.push(`${path}.content.pairs necesita al menos dos parejas.`)
+    }
+
+    if (pairs.some((pair) => !pair.trim())) {
+      problems.push(`${path}.content.pairs no puede contener etiquetas vacías.`)
+    }
+
+    if (new Set(pairs).size !== pairs.length) {
+      problems.push(`${path}.content.pairs no puede repetir etiquetas.`)
+    }
+  }
 }
 
 export function validateContentBundle(

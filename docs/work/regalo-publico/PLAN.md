@@ -1,7 +1,7 @@
 # PLAN — regalo-publico
 
 **Slug:** `regalo-publico` · **Actualizado:** `2026-11-06`
-**Estado:** `P1–P6 completadas; P7 siguiente`
+**Estado:** `P1–P7 completadas; P8 siguiente`
 **Puerta de privacidad:** [`PRIVACY.md`](PRIVACY.md) · **Repos:** [`REPOS.md`](REPOS.md)
 
 ## Objetivo
@@ -87,7 +87,7 @@ interface ContentBundle {
 | P4 | Contrato `ContentBundle` y migración | ✅ |
 | P5 | Menú por fecha y bienvenida | ✅ |
 | P6 | Tema celeste y fallback original | ✅ |
-| P7 | Mini-juego memoria del robot | ⏳ |
+| P7 | Mini-juego memoria del robot | ✅ |
 | P8 | Mini-juego jardín de mensajes | ⏳ |
 | P9 | Documentación, demo y release | ⏳ |
 
@@ -174,6 +174,17 @@ interface ContentBundle {
 - **Cómo:** `MiniGameView` + registro explícito; `robot-memory` con pares configurables; estado,
   reinicio, teclado y tacto; anuncio de estado para tecnologías de asistencia; sin animación
   obligatoria.
+- **Criterio de aceptación:** el tipo `robot-memory` se resuelve desde el registro; crea dos cartas por
+  cada etiqueta configurada, baraja al iniciar/reiniciar, cuenta turnos, conserva parejas acertadas y
+  oculta los errores tras una pausa breve. El teclado y el tacto permiten jugar; foco y estados son
+  perceptibles; se anuncia progreso y finalización; el contenido ausente queda pendiente; el juego no
+  persiste datos ni depende de animación.
+- **Estado:** completada. La demo usa cuatro etiquetas numéricas neutrales; el contenido permite
+  configurar parejas sin añadir assets ni dependencias. El shell y las rutas existentes se conservan.
+- **Verificación:** `npm run typecheck` OK; `npm run test` OK (8 archivos, 78 pruebas);
+  `npm run test:e2e` OK (14 pruebas, incluye emparejamiento, error, finalización, reinicio, teclado,
+  tacto, movimiento reducido y viewports 320/375/768/1024 px); `npm run build` OK. No se ejecutó
+  `validate:release`, que permanece en P9.
 
 ### P8 — Mini-juego jardín de mensajes
 
@@ -214,3 +225,5 @@ interface ContentBundle {
   orden estable, semántica de listas y cobertura unitaria/E2E.
 - `2026-11-06` — P6 completada: temas celeste y alternativo configurables, paletas con contraste
   validado, SVG originales locales y fallback probado para recursos ausentes.
+- `2026-11-06` — P7 completada: memoria del robot configurable desde el bundle, con teclado, tacto,
+  anuncios de estado, reinicio y pruebas unitarias/E2E; sin dependencias ni assets nuevos.

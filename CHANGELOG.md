@@ -2,6 +2,15 @@
 
 ## 2026-11-06
 
+- Se completa P7: se añade `robot-memory` como quinto tipo de regalo, con pares configurables desde
+  `ContentBundle`, barajado, turnos, aciertos, errores temporizados y reinicio.
+- El juego admite teclado y tacto, foco visible y anuncios accesibles de progreso/finalización; no
+  persiste datos, no usa assets ni dependencias nuevas y no requiere animación. La demo usa cuatro
+  pares numéricos neutros.
+- Se verifican typecheck, 78 pruebas unitarias, 14 E2E (incluidos juego completo, reinicio, teclado,
+  tacto, movimiento reducido y anchos 320/375/768/1024 px) y build. `validate:release` sigue pendiente
+  para P9.
+- La guía de contenido explica el formato configurable de los pares de memoria.
 - Se completa P6: tema celeste por defecto y tema alternativo opcional, paletas configurables con
   validación de contraste y assets SVG originales locales con fallback cuando no cargan.
 - Se integra el tema configurable desde `ContentBundle`, con foco visible, decoraciones accesibles y

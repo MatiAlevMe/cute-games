@@ -4,6 +4,7 @@ import { AchievementView } from '../../src/gifts/views/AchievementView'
 import { LetterView } from '../../src/gifts/views/LetterView'
 import { PoemView } from '../../src/gifts/views/PoemView'
 import { RingView } from '../../src/gifts/views/RingView'
+import { MiniGameView } from '../../src/gifts/views/MiniGameView'
 import { achievementGift, letterGift, poemGift, ringGift } from './fixtures'
 
 describe('LetterView', () => {
@@ -145,5 +146,33 @@ describe('AchievementView', () => {
 
     expect(markup).toContain('&lt;strong&gt;')
     expect(markup).not.toContain('<strong>')
+  })
+})
+
+describe('MiniGameView', () => {
+  const gift = {
+    id: 'memoria-robot',
+    kind: 'robot-memory' as const,
+    title: 'Memoria del robot',
+    menuLabel: 'Memoria del robot',
+    content: { pairs: ['1', '2', '3', '4'] },
+  }
+
+  it('renderiza el tablero, controles accesibles y estado inicial', () => {
+    const markup = renderToStaticMarkup(<MiniGameView gift={gift} />)
+
+    expect(markup.match(/class="robot-memory__card/g)).toHaveLength(8)
+    expect(markup).toContain('aria-label="Carta 1, oculta"')
+    expect(markup).toContain('>Reiniciar juego</button>')
+    expect(markup).toContain('role="status"')
+    expect(markup).toContain('Juego listo: 4 parejas.')
+  })
+
+  it('muestra pendiente si no hay pares configurados', () => {
+    const markup = renderToStaticMarkup(
+      <MiniGameView gift={{ ...gift, content: null }} />,
+    )
+
+    expect(markup).toContain('data-content-status="pending"')
   })
 })

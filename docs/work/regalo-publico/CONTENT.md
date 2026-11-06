@@ -17,6 +17,11 @@ cambiarlos se edita el archivo, se revisa en local y se vuelve a construir el si
 | [`src/content/texts/anillo.txt`](../../../src/content/texts/anillo.txt) | Anillo | Un mensaje breve en texto plano. |
 | [`src/content/texts/logro.txt`](../../../src/content/texts/logro.txt) | Logro | Un mensaje breve en texto plano. |
 
+La memoria del robot no usa archivos de texto: sus parejas se configuran en el regalo `robot-memory`
+dentro de `src/content/demo.ts`, mediante `content: { pairs: [...] }`. Cada etiqueta debe ser única y
+no vacía; se necesitan al menos dos parejas. La vista crea dos cartas por etiqueta y las baraja al
+iniciar y al reiniciar. Si no se configura contenido, muestra el estado pendiente.
+
 Los archivos actuales contienen **textos de ejemplo**. No son contenido definitivo: sirven para
 comprobar las vistas y deben reemplazarse por el contenido aprobado.
 
@@ -42,8 +47,8 @@ comprobar las vistas y deben reemplazarse por el contenido aprobado.
 npm run dev
 ```
 
-Abre `http://localhost:5173/#/regalo/carta`, `#/regalo/poema`, `#/regalo/anillo` o `#/regalo/logro` y
-revisa el resultado. Después ejecuta:
+Abre `http://localhost:5173/#/regalo/carta`, `#/regalo/poema`, `#/regalo/anillo`, `#/regalo/logro` o
+`#/regalo/memoria-robot` y revisa el resultado. Después ejecuta:
 
 ```bash
 npm run typecheck
@@ -62,8 +67,8 @@ publicado:** hay que volver a construir y desplegar.
 2. `src/content/demo.ts` asigna esos datos a cada regalo dentro del `ContentBundle` (`paragraphs`,
    `stanzas` o `message`). `App` recibe el bundle y resuelve ocasiones, bienvenida y regalo; el
    registro de vistas solo mapea `kind` a la vista y no importa contenido.
-3. `LetterView`, `PoemView`, `RingView` y `AchievementView` renderizan esos datos; no contienen copy
-   definitivo.
+3. `LetterView`, `PoemView`, `RingView` y `AchievementView` renderizan esos datos; `MiniGameView`
+   crea el tablero desde sus etiquetas configuradas. Las vistas no contienen copy definitivo.
 
 Si un archivo queda vacío, el parser devuelve una lista vacía o `null` y la vista muestra un estado
 pendiente explícito en lugar de una pantalla rota.

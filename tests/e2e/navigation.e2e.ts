@@ -25,23 +25,29 @@ const gifts = [
     selector: '.achievement__message',
     count: 1,
   },
+  {
+    path: '/#/regalo/memoria-robot',
+    title: 'Memoria del robot',
+    selector: '.robot-memory__card',
+    count: 8,
+  },
 ]
 
 const routes = ['/', ...gifts.map((gift) => gift.path)]
 
-test('el menú muestra los cuatro regalos', async ({ page }) => {
+test('el menú muestra los cinco regalos', async ({ page }) => {
   await page.goto('/')
 
   await expect(page).toHaveTitle(/Regalo para ti/)
   await expect(page.getByRole('heading', { level: 1, name: 'Regalo para ti' })).toBeVisible()
   await expect(page.getByRole('heading', { level: 2, name: 'Demostración' })).toBeVisible()
-  await expect(page.getByText('Explora los cuatro regalos de ejemplo.')).toBeVisible()
+  await expect(page.getByText('Explora los regalos de ejemplo.')).toBeVisible()
   await expect(page.locator('time')).toHaveAttribute('dateTime', '2026-01-01')
 
   const nav = page.getByRole('navigation', { name: 'Regalos' })
-  await expect(nav.getByRole('link')).toHaveCount(4)
+  await expect(nav.getByRole('link')).toHaveCount(5)
   await expect(nav.locator('ol.occasion-timeline > li')).toHaveCount(1)
-  await expect(nav.locator('ul.gift-grid > li')).toHaveCount(4)
+  await expect(nav.locator('ul.gift-grid > li')).toHaveCount(5)
   await expect(nav.getByRole('link', { name: 'Carta' })).toHaveAttribute(
     'href',
     '#/regalo/carta',
@@ -134,6 +140,66 @@ test('se puede navegar y volver con el teclado', async ({ page }) => {
 
   await page.keyboard.press('Tab')
   await expect(page.getByRole('link', { name: /Volver al menú/ })).toBeFocused()
+})
+
+test('memoria funciona con teclado, anuncia estados y permite reiniciar', async ({ page }) => {
+  await page.addInitScript(() => {
+    Math.random = () => 0.999999
+  })
+  await page.goto('/#/regalo/memoria-robot')
+  const cards = page.locator('.robot-memory__card')
+  const firstCard = cards.first()
+
+  await firstCard.focus()
+  await expect(firstCard).toBeFocused()
+  await expect(firstCard).toHaveCSS('outline-style', 'solid')
+  await page.keyboard.press('Enter')
+  await expect(firstCard).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('status')).toContainText('descubierta')
+
+  await cards.nth(2).click()
+  await expect(page.getByText('Turnos: 1')).toBeVisible()
+  await expect(page.getByRole('status')).toContainText('No coinciden')
+  await expect(firstCard).toHaveAttribute('aria-pressed', 'false', { timeout: 2_000 })
+
+  await firstCard.focus()
+  await page.keyboard.press('Enter')
+  await cards.nth(1).focus()
+  await page.keyboard.press('Enter')
+  await expect(page.getByRole('status')).toContainText('Pareja 1 encontrada')
+
+  for (const index of [2, 4, 6]) {
+    await cards.nth(index).click()
+    await cards.nth(index + 1).click()
+  }
+  await expect(page.getByRole('status')).toHaveText('Juego completado en 5 turnos.')
+
+  await page.getByRole('button', { name: 'Reiniciar juego' }).click()
+  await expect(page.getByText('Turnos: 0')).toBeVisible()
+  await expect(page.getByRole('status')).toHaveText('Juego reiniciado: 4 parejas.')
+  await expect(cards).toHaveCount(8)
+  await expect
+    .poll(() => cards.evaluateAll((items) => items.every((item) => item.getAttribute('aria-pressed') === 'false')))
+    .toBe(true)
+})
+
+test('la memoria admite interacción táctil y respeta movimiento reducido', async ({ browser }) => {
+  const context = await browser.newContext({
+    viewport: { width: 375, height: 812 },
+    hasTouch: true,
+    reducedMotion: 'reduce',
+  })
+  const page = await context.newPage()
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/#/regalo/memoria-robot')
+
+  const card = page.locator('.robot-memory__card').first()
+  const box = await card.boundingBox()
+  expect(box).not.toBeNull()
+  await page.touchscreen.tap(box!.x + box!.width / 2, box!.y + box!.height / 2)
+  await expect(card).toHaveAttribute('aria-pressed', 'true')
+  expect(await page.evaluate(() => document.getAnimations().length)).toBe(0)
+  await context.close()
 })
 
 test('respeta prefers-reduced-motion', async ({ page }) => {

@@ -17,7 +17,15 @@ import {
   ringGift,
 } from './fixtures'
 
-const knownKinds = ['letter', 'poem', 'ring', 'achievement']
+const memoryGift: Extract<GiftDefinition, { kind: 'robot-memory' }> = {
+  id: 'memoria-robot',
+  kind: 'robot-memory',
+  title: 'Memoria del robot',
+  menuLabel: 'Memoria del robot',
+  content: { pairs: ['1', '2'] },
+}
+
+const knownKinds = ['letter', 'poem', 'ring', 'achievement', 'robot-memory']
 
 function occasion(id: string, date: string, gifts: readonly GiftDefinition[] = []): Occasion {
   return { id, date, title: id, gifts }
@@ -290,5 +298,36 @@ describe('validación del bundle', () => {
     expect(result.ok).toBe(false)
     expect(result.problems.join('\n')).toMatch(/text no alcanza contraste AA/)
     expect(result.problems.join('\n')).toMatch(/primaryStrong no alcanza contraste 3:1/)
+  })
+
+  it('valida que la memoria tenga etiquetas de parejas únicas y no vacías', () => {
+    const valid = validate(
+      makeBundle({ occasions: [{ ...demoOccasion, gifts: [memoryGift] }] }),
+    )
+    const invalid = validate(
+      makeBundle({
+        occasions: [
+          {
+            ...demoOccasion,
+            gifts: [{ ...memoryGift, content: { pairs: ['1'] } }],
+          },
+        ],
+      }),
+    )
+    const malformed = validate(
+      makeBundle({
+        occasions: [
+          {
+            ...demoOccasion,
+            gifts: [{ ...memoryGift, content: { pairs: ['1', '1', ' '] } }],
+          },
+        ],
+      }),
+    )
+
+    expect(valid.ok).toBe(true)
+    expect(invalid.problems.join('\n')).toMatch(/al menos dos parejas/)
+    expect(malformed.problems.join('\n')).toMatch(/etiquetas vacías/)
+    expect(malformed.problems.join('\n')).toMatch(/no puede repetir etiquetas/)
   })
 })
