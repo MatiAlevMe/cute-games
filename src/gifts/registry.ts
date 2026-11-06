@@ -3,6 +3,7 @@ import type { GiftKind, GiftViewProps } from './types'
 import { AchievementView } from './views/AchievementView'
 import { LetterView } from './views/LetterView'
 import { MiniGameView } from './views/MiniGameView'
+import { MessageGardenView } from './views/MessageGardenView'
 import { PoemView } from './views/PoemView'
 import { RingView } from './views/RingView'
 
@@ -16,6 +17,7 @@ export const giftViewRegistry: Record<GiftKind, ComponentType<GiftViewProps>> = 
   ring: RingView,
   achievement: AchievementView,
   'robot-memory': MiniGameView,
+  'message-garden': MessageGardenView,
 }
 
 export const giftKinds = Object.keys(giftViewRegistry) as GiftKind[]

@@ -5,7 +5,14 @@ import { LetterView } from '../../src/gifts/views/LetterView'
 import { PoemView } from '../../src/gifts/views/PoemView'
 import { RingView } from '../../src/gifts/views/RingView'
 import { MiniGameView } from '../../src/gifts/views/MiniGameView'
-import { achievementGift, letterGift, poemGift, ringGift } from './fixtures'
+import { MessageGardenView } from '../../src/gifts/views/MessageGardenView'
+import {
+  achievementGift,
+  letterGift,
+  messageGardenGift,
+  poemGift,
+  ringGift,
+} from './fixtures'
 
 describe('LetterView', () => {
   it('renderiza un párrafo por elemento y conserva el orden', () => {
@@ -171,6 +178,28 @@ describe('MiniGameView', () => {
   it('muestra pendiente si no hay pares configurados', () => {
     const markup = renderToStaticMarkup(
       <MiniGameView gift={{ ...gift, content: null }} />,
+    )
+
+    expect(markup).toContain('data-content-status="pending"')
+  })
+})
+
+describe('MessageGardenView', () => {
+  it('renderiza flores cerradas, reinicio y estado inicial', () => {
+    const markup = renderToStaticMarkup(<MessageGardenView gift={messageGardenGift} />)
+
+    expect(markup.match(/class="message-garden__button"/g)).toHaveLength(2)
+    expect(markup).toContain('aria-label="Revelar flor 1"')
+    expect(markup).toContain('aria-expanded="false"')
+    expect(markup).toContain('hidden=""')
+    expect(markup).toContain('>Reiniciar jardín</button>')
+    expect(markup).toContain('role="status"')
+    expect(markup).toContain('Jardín listo: 2 mensajes.')
+  })
+
+  it('muestra el estado pendiente si faltan mensajes', () => {
+    const markup = renderToStaticMarkup(
+      <MessageGardenView gift={{ ...messageGardenGift, content: null }} />,
     )
 
     expect(markup).toContain('data-content-status="pending"')

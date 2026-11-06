@@ -5,6 +5,7 @@ type LetterGift = Extract<GiftDefinition, { kind: 'letter' }>
 type PoemGift = Extract<GiftDefinition, { kind: 'poem' }>
 type RingGift = Extract<GiftDefinition, { kind: 'ring' }>
 type AchievementGift = Extract<GiftDefinition, { kind: 'achievement' }>
+type MessageGardenGift = Extract<GiftDefinition, { kind: 'message-garden' }>
 
 export const letterGift: LetterGift = {
   id: 'carta',
@@ -43,6 +44,14 @@ export const achievementGift: AchievementGift = {
   title: 'Logro',
   menuLabel: 'Logro',
   content: { message: 'Felicitación de prueba.' },
+}
+
+export const messageGardenGift: MessageGardenGift = {
+  id: 'jardin-mensajes',
+  kind: 'message-garden',
+  title: 'Jardín de mensajes',
+  menuLabel: 'Jardín de mensajes',
+  content: { messages: ['Mensaje de prueba uno.', 'Mensaje de prueba dos.'] },
 }
 
 export const demoOccasion: Occasion = {

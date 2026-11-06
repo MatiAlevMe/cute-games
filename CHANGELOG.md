@@ -2,6 +2,13 @@
 
 ## 2026-11-06
 
+- Se completa P8: se añade `message-garden`, con mensajes configurables desde `ContentBundle`; cada
+  flor revela un mensaje que permanece visible hasta reiniciar. La demo queda pendiente por falta de
+  contenido aprobado, y los mensajes ficticios viven únicamente en fixtures de prueba.
+- Se verifican typecheck, 81 pruebas unitarias, 17 E2E (teclado, tacto, anuncios, reinicio,
+  `prefers-reduced-motion` y anchos 320/375/768/1024 px) y build. Sin persistencia, backend,
+  dependencias ni assets nuevos; la fixture de mensajes de prueba no se incluye en `dist/` y
+  `validate:release` permanece sin cambios para P9.
 - Se completa P7: se añade `robot-memory` como quinto tipo de regalo, con pares configurables desde
   `ContentBundle`, barajado, turnos, aciertos, errores temporizados y reinicio.
 - El juego admite teclado y tacto, foco visible y anuncios accesibles de progreso/finalización; no

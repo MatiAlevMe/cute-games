@@ -15,6 +15,7 @@ import {
   makeBundle,
   poemGift,
   ringGift,
+  messageGardenGift,
 } from './fixtures'
 
 const memoryGift: Extract<GiftDefinition, { kind: 'robot-memory' }> = {
@@ -25,7 +26,14 @@ const memoryGift: Extract<GiftDefinition, { kind: 'robot-memory' }> = {
   content: { pairs: ['1', '2'] },
 }
 
-const knownKinds = ['letter', 'poem', 'ring', 'achievement', 'robot-memory']
+const knownKinds = [
+  'letter',
+  'poem',
+  'ring',
+  'achievement',
+  'robot-memory',
+  'message-garden',
+]
 
 function occasion(id: string, date: string, gifts: readonly GiftDefinition[] = []): Occasion {
   return { id, date, title: id, gifts }
@@ -329,5 +337,35 @@ describe('validación del bundle', () => {
     expect(invalid.problems.join('\n')).toMatch(/al menos dos parejas/)
     expect(malformed.problems.join('\n')).toMatch(/etiquetas vacías/)
     expect(malformed.problems.join('\n')).toMatch(/no puede repetir etiquetas/)
+  })
+
+  it('valida que el jardín tenga mensajes no vacíos', () => {
+    const valid = validate(
+      makeBundle({ occasions: [{ ...demoOccasion, gifts: [messageGardenGift] }] }),
+    )
+    const empty = validate(
+      makeBundle({
+        occasions: [
+          {
+            ...demoOccasion,
+            gifts: [{ ...messageGardenGift, content: { messages: [] } }],
+          },
+        ],
+      }),
+    )
+    const blank = validate(
+      makeBundle({
+        occasions: [
+          {
+            ...demoOccasion,
+            gifts: [{ ...messageGardenGift, content: { messages: ['  '] } }],
+          },
+        ],
+      }),
+    )
+
+    expect(valid.ok).toBe(true)
+    expect(empty.problems.join('\n')).toMatch(/necesita al menos un mensaje/)
+    expect(blank.problems.join('\n')).toMatch(/no puede contener mensajes vacíos/)
   })
 })

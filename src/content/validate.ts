@@ -90,6 +90,16 @@ function validateGift(
       problems.push(`${path}.content.pairs no puede repetir etiquetas.`)
     }
   }
+
+  if (gift.kind === 'message-garden' && gift.content) {
+    if (gift.content.messages.length === 0) {
+      problems.push(`${path}.content.messages necesita al menos un mensaje.`)
+    }
+
+    if (gift.content.messages.some((message) => !message.trim())) {
+      problems.push(`${path}.content.messages no puede contener mensajes vacíos.`)
+    }
+  }
 }
 
 export function validateContentBundle(

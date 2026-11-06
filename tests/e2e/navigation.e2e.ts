@@ -31,11 +31,19 @@ const gifts = [
     selector: '.robot-memory__card',
     count: 8,
   },
+  {
+    path: '/#/regalo/jardin-mensajes',
+    title: 'Jardín de mensajes',
+    selector: '.pending',
+    count: 1,
+    pending: true,
+  },
 ]
 
-const routes = ['/', ...gifts.map((gift) => gift.path)]
+const gardenFixturePath = 'http://127.0.0.1:5173/tests/e2e/fixtures/message-garden.html'
+const routes = ['/', ...gifts.map((gift) => gift.path), gardenFixturePath]
 
-test('el menú muestra los cinco regalos', async ({ page }) => {
+test('el menú muestra los seis regalos', async ({ page }) => {
   await page.goto('/')
 
   await expect(page).toHaveTitle(/Regalo para ti/)
@@ -45,9 +53,9 @@ test('el menú muestra los cinco regalos', async ({ page }) => {
   await expect(page.locator('time')).toHaveAttribute('dateTime', '2026-01-01')
 
   const nav = page.getByRole('navigation', { name: 'Regalos' })
-  await expect(nav.getByRole('link')).toHaveCount(5)
+  await expect(nav.getByRole('link')).toHaveCount(6)
   await expect(nav.locator('ol.occasion-timeline > li')).toHaveCount(1)
-  await expect(nav.locator('ul.gift-grid > li')).toHaveCount(5)
+  await expect(nav.locator('ul.gift-grid > li')).toHaveCount(6)
   await expect(nav.getByRole('link', { name: 'Carta' })).toHaveAttribute(
     'href',
     '#/regalo/carta',
@@ -95,7 +103,7 @@ for (const gift of gifts) {
 
     await expect(page.getByRole('heading', { level: 1, name: gift.title })).toBeVisible()
     await expect(page.locator(gift.selector)).toHaveCount(gift.count)
-    await expect(page.locator('[data-content-status="pending"]')).toHaveCount(0)
+    await expect(page.locator('[data-content-status="pending"]')).toHaveCount(gift.pending ? 1 : 0)
 
     await page.getByRole('link', { name: /Volver al menú/ }).click()
     await expect(page).toHaveURL(/#\/$/)
@@ -198,6 +206,47 @@ test('la memoria admite interacción táctil y respeta movimiento reducido', asy
   expect(box).not.toBeNull()
   await page.touchscreen.tap(box!.x + box!.width / 2, box!.y + box!.height / 2)
   await expect(card).toHaveAttribute('aria-pressed', 'true')
+  expect(await page.evaluate(() => document.getAnimations().length)).toBe(0)
+  await context.close()
+})
+
+test('el jardín revela mensajes con teclado, conserva lo abierto y reinicia', async ({ page }) => {
+  await page.goto(gardenFixturePath)
+  const firstFlower = page.locator('.message-garden__button').nth(0)
+  const secondFlower = page.getByRole('button', { name: 'Revelar flor 2' })
+
+  await firstFlower.focus()
+  await expect(firstFlower).toHaveCSS('outline-style', 'solid')
+  await page.keyboard.press('Enter')
+  await expect(firstFlower).toHaveAttribute('aria-expanded', 'true')
+  await expect(page.locator('#garden-message-1')).toHaveText('Mensaje de prueba uno.')
+  await expect(page.getByRole('status')).toHaveText('Mensaje 1 de 3: Mensaje de prueba uno.')
+  await secondFlower.click()
+  await expect(page.locator('#garden-message-1')).toBeVisible()
+  await expect(page.locator('#garden-message-2')).toBeVisible()
+  await expect(page.getByText('Mensajes revelados: 2 de 3')).toBeVisible()
+
+  await page.getByRole('button', { name: 'Reiniciar jardín' }).click()
+  await expect(page.getByText('Mensajes revelados: 0 de 3')).toBeVisible()
+  await expect(page.locator('#garden-message-1')).toBeHidden()
+  await expect(page.locator('#garden-message-2')).toBeHidden()
+  await expect(page.getByRole('status')).toHaveText('Jardín reiniciado: 0 de 3 mensajes revelados.')
+})
+
+test('el jardín admite tacto y no inicia animaciones con movimiento reducido', async ({ browser }) => {
+  const context = await browser.newContext({
+    viewport: { width: 375, height: 812 },
+    hasTouch: true,
+    reducedMotion: 'reduce',
+  })
+  const page = await context.newPage()
+  await page.goto(gardenFixturePath)
+
+  const flower = page.locator('.message-garden__button').first()
+  const box = await flower.boundingBox()
+  expect(box).not.toBeNull()
+  await page.touchscreen.tap(box!.x + box!.width / 2, box!.y + box!.height / 2)
+  await expect(flower).toHaveAttribute('aria-expanded', 'true')
   expect(await page.evaluate(() => document.getAnimations().length)).toBe(0)
   await context.close()
 })

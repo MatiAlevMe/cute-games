@@ -50,6 +50,13 @@ export const demoBundle: ContentBundle = {
           menuLabel: 'Memoria del robot',
           content: { pairs: ['1', '2', '3', '4'] },
         },
+        {
+          id: 'jardin-mensajes',
+          kind: 'message-garden',
+          title: 'Jardín de mensajes',
+          menuLabel: 'Jardín de mensajes',
+          content: null,
+        },
       ],
     },
   ],

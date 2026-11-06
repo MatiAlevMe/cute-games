@@ -6,6 +6,7 @@ describe('registro de vistas', () => {
     expect([...giftKinds].sort()).toEqual([
       'achievement',
       'letter',
+      'message-garden',
       'poem',
       'ring',
       'robot-memory',
@@ -18,7 +19,7 @@ describe('registro de vistas', () => {
 
   it('no registra tipos de vista adicionales', () => {
     expect(Object.keys(giftViewRegistry).sort()).toEqual(
-      ['achievement', 'letter', 'poem', 'ring', 'robot-memory'].sort(),
+      ['achievement', 'letter', 'message-garden', 'poem', 'ring', 'robot-memory'].sort(),
     )
   })
 })

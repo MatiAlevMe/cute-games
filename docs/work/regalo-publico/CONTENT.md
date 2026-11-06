@@ -22,6 +22,12 @@ dentro de `src/content/demo.ts`, mediante `content: { pairs: [...] }`. Cada etiq
 no vacía; se necesitan al menos dos parejas. La vista crea dos cartas por etiqueta y las baraja al
 iniciar y al reiniciar. Si no se configura contenido, muestra el estado pendiente.
 
+El jardín de mensajes se configura en el regalo `message-garden` mediante
+`content: { messages: [...] }`. Cada elemento es un mensaje de texto plano no vacío. Activar una flor
+revela su mensaje; los mensajes revelados permanecen visibles hasta reiniciar el jardín. Si no hay
+contenido aprobado, se usa `content: null` y se muestra el estado pendiente. La demo pública mantiene
+ese estado pendiente: no se inventa texto de ejemplo.
+
 Los archivos actuales contienen **textos de ejemplo**. No son contenido definitivo: sirven para
 comprobar las vistas y deben reemplazarse por el contenido aprobado.
 
@@ -47,8 +53,8 @@ comprobar las vistas y deben reemplazarse por el contenido aprobado.
 npm run dev
 ```
 
-Abre `http://localhost:5173/#/regalo/carta`, `#/regalo/poema`, `#/regalo/anillo`, `#/regalo/logro` o
-`#/regalo/memoria-robot` y revisa el resultado. Después ejecuta:
+Abre `http://localhost:5173/#/regalo/carta`, `#/regalo/poema`, `#/regalo/anillo`, `#/regalo/logro`,
+`#/regalo/memoria-robot` o `#/regalo/jardin-mensajes` y revisa el resultado. Después ejecuta:
 
 ```bash
 npm run typecheck
@@ -67,8 +73,9 @@ publicado:** hay que volver a construir y desplegar.
 2. `src/content/demo.ts` asigna esos datos a cada regalo dentro del `ContentBundle` (`paragraphs`,
    `stanzas` o `message`). `App` recibe el bundle y resuelve ocasiones, bienvenida y regalo; el
    registro de vistas solo mapea `kind` a la vista y no importa contenido.
-3. `LetterView`, `PoemView`, `RingView` y `AchievementView` renderizan esos datos; `MiniGameView`
-   crea el tablero desde sus etiquetas configuradas. Las vistas no contienen copy definitivo.
+3. `LetterView`, `PoemView`, `RingView` y `AchievementView` renderizan esos datos; las vistas de
+   mini-juegos crean sus controles desde el contenido configurado. Las vistas no contienen copy
+   definitivo.
 
 Si un archivo queda vacío, el parser devuelve una lista vacía o `null` y la vista muestra un estado
 pendiente explícito en lugar de una pantalla rota.

@@ -1,7 +1,7 @@
 # PLAN — regalo-publico
 
 **Slug:** `regalo-publico` · **Actualizado:** `2026-11-06`
-**Estado:** `P1–P7 completadas; P8 siguiente`
+**Estado:** `P1–P8 completadas; P9 siguiente`
 **Puerta de privacidad:** [`PRIVACY.md`](PRIVACY.md) · **Repos:** [`REPOS.md`](REPOS.md)
 
 ## Objetivo
@@ -88,7 +88,7 @@ interface ContentBundle {
 | P5 | Menú por fecha y bienvenida | ✅ |
 | P6 | Tema celeste y fallback original | ✅ |
 | P7 | Mini-juego memoria del robot | ✅ |
-| P8 | Mini-juego jardín de mensajes | ⏳ |
+| P8 | Mini-juego jardín de mensajes | ✅ |
 | P9 | Documentación, demo y release | ⏳ |
 
 ## Tareas
@@ -191,6 +191,17 @@ interface ContentBundle {
 - **Qué:** añadir el segundo regalo interactivo con mensajes estáticos configurables.
 - **Cómo:** mensajes desde el bundle; interacción, reinicio, teclado y tacto; estados anunciados; sin
   persistencia ni backend; sin almacenar aportes de usuarios.
+- **Criterio de aceptación:** `message-garden` se resuelve desde el registro; cada mensaje configurado
+  aparece tras activar su flor y permanece revelado hasta reiniciar; el teclado y el tacto permiten
+  jugar; el progreso y la revelación se anuncian; el contenido ausente queda pendiente; no se guardan
+  datos ni se depende de animación. El contenido de demo permanece pendiente mientras no haya mensajes
+  aprobados.
+- **Estado:** completada. La mecánica acordada revela cada mensaje y lo conserva visible hasta
+  reiniciar. Se validan mensajes configurados no vacíos; la demo pública deja el contenido pendiente.
+- **Verificación:** `npm run typecheck` OK; `npm run test` OK (8 archivos, 81 pruebas);
+  `npm run test:e2e` OK (17 pruebas; incluye ruta pública pendiente, revelación, teclado, tacto,
+  anuncios, reinicio, movimiento reducido y anchos 320/375/768/1024 px); `npm run build` OK.
+  `validate:release` no se ejecutó; su migración permanece en P9.
 
 ### P9 — Documentación, demo y validación de release
 
@@ -227,3 +238,6 @@ interface ContentBundle {
   validado, SVG originales locales y fallback probado para recursos ausentes.
 - `2026-11-06` — P7 completada: memoria del robot configurable desde el bundle, con teclado, tacto,
   anuncios de estado, reinicio y pruebas unitarias/E2E; sin dependencias ni assets nuevos.
+- `2026-11-06` — P8 completada: jardín de mensajes configurable, con flores revelables, anuncios,
+  reinicio, teclado y tacto. La demo queda pendiente por falta de mensajes aprobados; sin persistencia,
+  backend, dependencias ni assets nuevos.

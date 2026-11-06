@@ -27,7 +27,7 @@ No incluye backend, autenticación, CMS, PWA ni mini-juegos.
 
 ## Fase 2 — Plantilla configurable y contenido privado
 
-**Estado:** en curso; P1–P6 completadas y P7 siguiente.
+**Estado:** en curso; P1–P8 completadas y P9 siguiente.
 
 Objetivo: convertir el proyecto en una plantilla reutilizable y separar el motor público del
 contenido privado.

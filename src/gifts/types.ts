@@ -1,4 +1,10 @@
-export type GiftKind = 'letter' | 'poem' | 'ring' | 'achievement' | 'robot-memory'
+export type GiftKind =
+  | 'letter'
+  | 'poem'
+  | 'ring'
+  | 'achievement'
+  | 'robot-memory'
+  | 'message-garden'
 
 export interface GiftAsset {
   src: string
@@ -35,6 +41,10 @@ export type GiftDefinition =
   | (GiftBase & {
       kind: 'robot-memory'
       content: { pairs: readonly string[] } | null
+    })
+  | (GiftBase & {
+      kind: 'message-garden'
+      content: { messages: readonly string[] } | null
     })
 
 export interface GiftViewProps {

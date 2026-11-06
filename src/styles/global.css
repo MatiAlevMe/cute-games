@@ -344,6 +344,92 @@ main:focus {
   margin-top: 0.85rem;
 }
 
+.message-garden {
+  max-width: 42rem;
+  margin-top: 1.5rem;
+}
+
+.message-garden__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.message-garden__progress,
+.message-garden__status {
+  margin: 0;
+}
+
+.message-garden__restart {
+  min-height: var(--touch-target);
+  padding: 0.5rem 0.9rem;
+  border: 2px solid var(--color-primary-strong);
+  border-radius: 0.75rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.message-garden__flowers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  gap: 0.75rem;
+}
+
+.message-garden__flower {
+  min-width: 0;
+  padding: 0.75rem;
+  border: 2px solid var(--color-primary-strong);
+  border-radius: 1rem;
+  background: var(--color-surface);
+  text-align: center;
+}
+
+.message-garden__button {
+  display: grid;
+  place-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  min-height: var(--touch-target);
+  padding: 0.25rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.message-garden__icon {
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.message-garden__message {
+  margin: 0.5rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-primary-strong);
+  overflow-wrap: anywhere;
+}
+
+.message-garden__button:focus-visible,
+.message-garden__restart:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.message-garden__status {
+  min-height: 1.5em;
+  margin-top: 0.85rem;
+}
+
 @media (min-width: 40rem) {
   .page {
     padding: 2.5rem 1.5rem 4rem;
