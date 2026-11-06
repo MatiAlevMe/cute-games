@@ -2,6 +2,13 @@
 
 ## 2026-11-06
 
+- Se completa P6: tema celeste por defecto y tema alternativo opcional, paletas configurables con
+  validación de contraste y assets SVG originales locales con fallback cuando no cargan.
+- Se integra el tema configurable desde `ContentBundle`, con foco visible, decoraciones accesibles y
+  respeto por `prefers-reduced-motion`; no se añaden dependencias ni assets de terceros.
+- Se verifican typecheck, 75 pruebas unitarias, 11 E2E (incluidos fallback visual y anchos
+  320/375/768/1024 px), build e inspección de los tres SVG en `dist/` sin referencias externas a
+  imágenes. `validate:release` permanece sin cambios para P9.
 - Se completa P5: `GiftMenu` presenta una línea de tiempo con secciones por ocasión, bienvenida con
   precedencia de ocasión/sitio, fechas calendario `es-CL` sin desfase y regalos ordenados de forma
   determinista.

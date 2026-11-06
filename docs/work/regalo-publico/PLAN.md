@@ -1,7 +1,7 @@
 # PLAN — regalo-publico
 
 **Slug:** `regalo-publico` · **Actualizado:** `2026-11-06`
-**Estado:** `P1–P5 completadas; P6 siguiente`
+**Estado:** `P1–P6 completadas; P7 siguiente`
 **Puerta de privacidad:** [`PRIVACY.md`](PRIVACY.md) · **Repos:** [`REPOS.md`](REPOS.md)
 
 ## Objetivo
@@ -86,7 +86,7 @@ interface ContentBundle {
 | P3 | Demo neutra y publicación de la plantilla | ✅ |
 | P4 | Contrato `ContentBundle` y migración | ✅ |
 | P5 | Menú por fecha y bienvenida | ✅ |
-| P6 | Tema celeste y fallback original | ⏳ |
+| P6 | Tema celeste y fallback original | ✅ |
 | P7 | Mini-juego memoria del robot | ⏳ |
 | P8 | Mini-juego jardín de mensajes | ⏳ |
 | P9 | Documentación, demo y release | ⏳ |
@@ -159,6 +159,14 @@ interface ContentBundle {
 - **Criterio de aceptación:** ambos temas renderizan; el fallback original aparece si falta un asset;
   contraste AA; foco visible; reducción de movimiento; sin URLs externas ni personajes de terceros en
   el repo o build público.
+- **Estado:** completada. `SiteConfig.theme` configura tema, paleta e ilustraciones locales; celeste es
+  el tema predeterminado. Las dos paletas se validan por formato y contraste, y las imágenes rotas
+  cambian al wallpaper y robot originales incluidos. No se incorporan dependencias ni contenido de
+  terceros.
+- **Verificación:** `npm run typecheck`, `npm run test` (8 archivos, 75 pruebas), `npm run test:e2e`
+  (11 pruebas; fallback, teclado, movimiento reducido y anchos 320/375/768/1024 px) y
+  `npm run build`, todos OK. La inspección de `dist/` confirma los tres SVG locales y no detecta
+  referencias externas a imágenes. `validate:release` no se ejecutó; su migración permanece en P9.
 
 ### P7 — Mini-juego memoria del robot
 
@@ -204,3 +212,5 @@ interface ContentBundle {
   deterministas, demo migrada y registro de vistas sin contenido.
 - `2026-11-06` — P5 completada: menú temporal por ocasión, bienvenida configurable, fechas locales,
   orden estable, semántica de listas y cobertura unitaria/E2E.
+- `2026-11-06` — P6 completada: temas celeste y alternativo configurables, paletas con contraste
+  validado, SVG originales locales y fallback probado para recursos ausentes.

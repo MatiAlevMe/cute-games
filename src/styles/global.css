@@ -1,12 +1,14 @@
 ﻿:root {
   color-scheme: light;
-  --color-text: #1b1b1b;
-  --color-background: #ffffff;
-  --color-surface: #f7f7f7;
-  --color-surface-hover: #ececec;
-  --color-border: #767676;
-  --color-focus: #005fcc;
-  --radius: 0.5rem;
+  --color-text: #163247;
+  --color-background: #eaf7ff;
+  --color-surface: #ffffff;
+  --color-primary: #8bd3f2;
+  --color-primary-strong: #075985;
+  --color-accent: #c2417a;
+  --color-border: var(--color-primary-strong);
+  --color-focus: var(--color-primary-strong);
+  --radius: 1rem;
   --page-max: 60rem;
   --reading-max: 38rem;
   --touch-target: 2.75rem;
@@ -29,12 +31,57 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-wrap: break-word;
+  background: var(--color-background);
+}
+
+.app-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+.theme-art {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.theme-art__wallpaper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
+}
+
+.theme-art__mascot {
+  position: absolute;
+  right: clamp(0.75rem, 5vw, 4rem);
+  bottom: clamp(0.75rem, 4vh, 2.5rem);
+  width: clamp(5rem, 15vw, 10rem);
+  max-height: 28vh;
+  object-fit: contain;
+  opacity: 0.32;
+}
+
+.theme-alternativo .theme-art__wallpaper,
+.theme-alternativo .theme-art__mascot {
+  filter: hue-rotate(28deg) saturate(0.75);
 }
 
 h1 {
   margin: 0;
   font-size: clamp(1.75rem, 5vw, 2.5rem);
   line-height: 1.2;
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 0.14em;
+  text-underline-offset: 0.16em;
 }
 
 a {
@@ -53,6 +100,8 @@ a:focus:not(:focus-visible) {
 }
 
 .page {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: var(--page-max);
   margin: 0 auto;
@@ -100,7 +149,7 @@ main:focus {
 .occasion-section {
   min-width: 0;
   padding-top: 1rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 2px solid var(--color-primary-strong);
 }
 
 .occasion-header {
@@ -132,13 +181,16 @@ main:focus {
 }
 
 .gift-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   min-height: 4.5rem;
   padding: 1.25rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
+  border: 2px solid var(--color-primary-strong);
+  border-radius: calc(var(--radius) + 0.25rem);
   background: var(--color-surface);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--color-primary) 70%, transparent);
   font-size: 1.125rem;
   font-weight: 600;
   text-decoration: none;
@@ -146,7 +198,7 @@ main:focus {
 
 @media (hover: hover) {
   .gift-card:hover {
-    background: var(--color-surface-hover);
+    background: color-mix(in srgb, var(--color-surface) 88%, var(--color-primary));
   }
 }
 

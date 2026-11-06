@@ -48,6 +48,41 @@ test('el menú muestra los cuatro regalos', async ({ page }) => {
   )
 })
 
+test('el tema celeste usa arte local y cambia al fallback original si falta un asset', async ({ page }) => {
+  await page.route('**/assets/theme/celeste-wallpaper.svg', (route) => route.abort())
+  await page.goto('/')
+
+  await expect(page.locator('.app-shell')).toHaveClass(/theme-celeste/)
+  await expect(page.locator('.theme-art__wallpaper')).toHaveAttribute(
+    'src',
+    '/assets/theme/fallback-wallpaper.svg',
+  )
+  await expect(page.locator('.theme-art__mascot')).toHaveAttribute(
+    'src',
+    '/assets/theme/fallback-robot.svg',
+  )
+  await expect(page.locator('.theme-art__wallpaper')).toHaveAttribute('alt', '')
+  await expect
+    .poll(() =>
+      page.locator('.theme-art img').evaluateAll((images) =>
+        images.every(
+          (image) =>
+            (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0,
+        ),
+      ),
+    )
+    .toBe(true)
+
+  const theme = await page.locator('.app-shell').evaluate((element) => {
+    const style = getComputedStyle(element)
+    return {
+      background: style.getPropertyValue('--color-background').trim(),
+      text: style.getPropertyValue('--color-text').trim(),
+    }
+  })
+  expect(theme).toEqual({ background: '#eaf7ff', text: '#163247' })
+})
+
 for (const gift of gifts) {
   test(`abre ${gift.title} y vuelve al menú`, async ({ page }) => {
     await page.goto(gift.path)
@@ -90,6 +125,8 @@ test('se puede navegar y volver con el teclado', async ({ page }) => {
   await page.keyboard.press('Tab')
   const card = page.getByRole('navigation', { name: 'Regalos' }).getByRole('link', { name: 'Carta' })
   await expect(card).toBeFocused()
+  await expect(card).toHaveCSS('outline-style', 'solid')
+  await expect(card).toHaveCSS('outline-width', '3px')
 
   await page.keyboard.press('Enter')
   await expect(page).toHaveURL(/#\/regalo\/carta$/)

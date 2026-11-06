@@ -68,8 +68,11 @@ configurable.
 ```text
 repo público/
 ├── public/assets/theme/
+│   ├── celeste-wallpaper.svg
+│   ├── fallback-wallpaper.svg
 │   └── fallback-robot.svg
-└── src/content/theme.ts       # tema por defecto y fallback
+├── src/content/site.ts        # tema celeste y wallpaper local de la demo
+└── src/content/theme.ts       # paletas predeterminadas y contraste
 
 repo privado/
 ├── public/assets/theme/
@@ -103,7 +106,12 @@ interface ThemeConfig {
 - Si falta un asset, se usa el fallback original.
 - No se permite inyectar HTML ni CSS arbitrario desde el contenido.
 - Las rutas deben ser locales y validadas; no se aceptan URLs externas.
-- El contraste se verifica con los tokens de cada tema, no solo con el tema celeste.
+- La paleta opcional acepta colores `#RRGGBB`; el validador comprueba AA para texto y 3:1 para
+  `primaryStrong` sobre fondo y superficie.
+- Si un wallpaper o una mascota no carga, se usa el SVG original de fallback; si también falla,
+  permanece el fondo de color CSS.
+- Los SVG bajo `public/assets/theme/` fueron creados para este proyecto, sin fuentes, personajes ni
+  marcas de terceros; son decorativos y no requieren alt visible.
 
 ## Checklist antes de incorporar un asset
 

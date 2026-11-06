@@ -8,5 +8,12 @@ export const demoSite: SiteConfig = {
   recipient: 'ti',
   welcome: 'Esta es una demostración de la plantilla cute-games.',
   locale: 'es-CL',
-  theme: { id: 'celeste' },
+  theme: {
+    id: 'celeste',
+    wallpaper: {
+      src: '/assets/theme/celeste-wallpaper.svg',
+      alt: 'Cielo celeste con nubes, estrellas y una cuadrícula pixelada.',
+      decorative: true,
+    },
+  },
 }

@@ -1,9 +1,11 @@
 import type { GiftDefinition } from '../gifts/types'
+import { contrastRatio } from './theme'
 import { isValidCalendarDate } from './date'
 import type { ContentBundle, ThemeAsset } from './types'
 
 const idPattern = /^[a-z0-9-]+$/
 const themeIds = new Set(['celeste', 'alternativo'])
+const hexColorPattern = /^#[\da-f]{6}$/i
 
 export interface ContentValidationOptions {
   /** Tipos de vista conocidos; en la app se obtienen de `giftViewRegistry`. */
@@ -98,6 +100,39 @@ export function validateContentBundle(
 
   if (!themeIds.has(bundle.site.theme.id)) {
     problems.push(`site.theme.id "${bundle.site.theme.id}" no es un tema conocido.`)
+  }
+
+  if (bundle.site.theme.palette) {
+    const palette = bundle.site.theme.palette
+    const paletteFields = [
+      'background',
+      'surface',
+      'primary',
+      'primaryStrong',
+      'accent',
+      'text',
+    ] as const
+    const invalidColors = paletteFields.filter(
+      (name) => typeof palette[name] !== 'string' || !hexColorPattern.test(palette[name]),
+    )
+
+    for (const name of invalidColors) {
+      problems.push(`site.theme.palette.${name} debe ser un color hexadecimal #RRGGBB.`)
+    }
+
+    if (invalidColors.length === 0) {
+      for (const surface of ['background', 'surface'] as const) {
+        if (contrastRatio(palette.text, palette[surface]) < 4.5) {
+          problems.push(`site.theme.palette.text no alcanza contraste AA sobre ${surface}.`)
+        }
+
+        if (contrastRatio(palette.primaryStrong, palette[surface]) < 3) {
+          problems.push(
+            `site.theme.palette.primaryStrong no alcanza contraste 3:1 sobre ${surface}.`,
+          )
+        }
+      }
+    }
   }
 
   if (bundle.site.theme.wallpaper) {

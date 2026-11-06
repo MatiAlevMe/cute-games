@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="pixels" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M0 0h2v2H0zm24 24h2v2h-2z" fill="#1582aa" opacity=".14"/>
+    </pattern>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop stop-color="#d8f2ff"/>
+      <stop offset="1" stop-color="#f4fbff"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1440v900H0z"/>
+  <path fill="url(#pixels)" d="M0 0h1440v900H0z"/>
+  <g fill="#fff" opacity=".76">
+    <path d="M110 220c0-25 20-45 45-45 8-34 39-58 75-58 40 0 73 30 77 69 27 2 48 24 48 52H110z"/>
+    <path d="M1030 690c0-22 18-40 40-40 7-30 34-51 65-51 35 0 63 26 67 60 23 2 42 21 42 45h-214z"/>
+  </g>
+  <g fill="#ef9cc2" opacity=".78">
+    <path d="m900 175 9 23 25 2-19 15 6 24-21-13-21 13 6-24-19-15 25-2z"/>
+    <path d="m430 640 7 17 19 2-15 11 5 18-16-10-16 10 5-18-15-11 19-2z"/>
+  </g>
+  <g fill="#1682aa" opacity=".55">
+    <circle cx="735" cy="180" r="5"/><circle cx="1260" cy="370" r="4"/><circle cx="290" cy="470" r="4"/>
+    <path d="M1210 150h12v12h-12zm-850 120h10v10h-10zm540 480h12v12h-12z"/>
+  </g>
+</svg>

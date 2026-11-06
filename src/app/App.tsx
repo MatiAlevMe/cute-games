@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { GiftLayout } from '../components/GiftLayout'
 import { GiftMenu } from '../components/GiftMenu'
 import { RouteNotFound } from '../components/RouteNotFound'
+import { ThemeShell } from '../components/ThemeShell'
 import { findGift, sortOccasions } from '../content/bundle'
 import type { ContentBundle } from '../content/types'
 import { assertValidContentBundle } from '../content/validate'
@@ -52,7 +53,7 @@ export function App({ bundle }: AppProps) {
   }, [route])
 
   return (
-    <>
+    <ThemeShell theme={bundle.site.theme}>
       <a
         className="skip-link"
         href="#contenido"
@@ -77,7 +78,7 @@ export function App({ bundle }: AppProps) {
           <RouteNotFound />
         )}
       </main>
-    </>
+    </ThemeShell>
   )
 }
 

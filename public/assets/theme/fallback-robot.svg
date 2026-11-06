@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 260" role="img" aria-labelledby="title">
+  <title id="title">Robot original celeste</title>
+  <g stroke="#075985" stroke-linecap="round" stroke-linejoin="round" stroke-width="8">
+    <path fill="none" d="M120 35V18m0 0h20"/>
+    <circle cx="148" cy="18" r="8" fill="#ef9cc2"/>
+    <rect x="38" y="48" width="164" height="132" rx="30" fill="#bdeaff"/>
+    <path fill="#fff" d="M60 82a19 19 0 0 1 38 0v12H60zm82 0a19 19 0 0 1 38 0v12h-38z"/>
+    <circle cx="79" cy="82" r="7" fill="#075985" stroke="none"/>
+    <circle cx="161" cy="82" r="7" fill="#075985" stroke="none"/>
+    <path fill="none" d="M93 133q27 22 54 0M38 105H22v48h16m164-48h16v48h-16"/>
+    <path fill="#77c9e8" d="M76 180v28H58v25h46v-53m34 0v28h18v25h-46v-53"/>
+    <path fill="#ef9cc2" stroke="none" d="M112 107h16v16h-16z"/>
+  </g>
+</svg>

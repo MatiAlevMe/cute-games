@@ -249,4 +249,46 @@ describe('validación del bundle', () => {
     expect(missingAlt.problems.join('\n')).toMatch(/necesita alt/)
     expect(decorative.ok).toBe(true)
   })
+
+  it('valida assets del tema como rutas locales', () => {
+    const result = validate(
+      makeBundle({
+        site: {
+          ...makeBundle().site,
+          theme: {
+            id: 'celeste',
+            wallpaper: { src: 'https://example.com/fondo.svg', alt: 'Fondo celeste' },
+          },
+        },
+      }),
+    )
+
+    expect(result.ok).toBe(false)
+    expect(result.problems.join('\n')).toMatch(/site\.theme\.wallpaper\.src.*no es una ruta local/)
+  })
+
+  it('rechaza paletas que no alcanzan contraste AA', () => {
+    const result = validate(
+      makeBundle({
+        site: {
+          ...makeBundle().site,
+          theme: {
+            id: 'celeste',
+            palette: {
+              background: '#ffffff',
+              surface: '#ffffff',
+              primary: '#8bd3f2',
+              primaryStrong: '#aaaaaa',
+              accent: '#c2417a',
+              text: '#eeeeee',
+            },
+          },
+        },
+      }),
+    )
+
+    expect(result.ok).toBe(false)
+    expect(result.problems.join('\n')).toMatch(/text no alcanza contraste AA/)
+    expect(result.problems.join('\n')).toMatch(/primaryStrong no alcanza contraste 3:1/)
+  })
 })
