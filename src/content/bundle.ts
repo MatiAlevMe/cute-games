@@ -59,8 +59,8 @@ export function findGift(bundle: ContentBundle, id: string): GiftDefinition | un
 }
 
 /** `Occasion.welcome` reemplaza a `SiteConfig.welcome` cuando existe. */
-export function resolveWelcome(bundle: ContentBundle, occasion?: Occasion): string {
+export function resolveWelcome(siteWelcome: string, occasion?: Occasion): string {
   const occasionWelcome = occasion?.welcome?.trim()
 
-  return occasionWelcome ? occasionWelcome : bundle.site.welcome
+  return occasionWelcome ? occasionWelcome : siteWelcome
 }

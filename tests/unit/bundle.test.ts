@@ -82,7 +82,7 @@ describe('precedencia de bienvenida', () => {
   it('usa la bienvenida de la ocasión cuando existe', () => {
     const bundle = makeBundle()
 
-    expect(resolveWelcome(bundle, { ...demoOccasion, welcome: 'Bienvenida de la ocasión.' })).toBe(
+    expect(resolveWelcome(bundle.site.welcome, { ...demoOccasion, welcome: 'Bienvenida de la ocasión.' })).toBe(
       'Bienvenida de la ocasión.',
     )
   })
@@ -90,14 +90,14 @@ describe('precedencia de bienvenida', () => {
   it('usa la bienvenida del sitio cuando la ocasión no la define', () => {
     const bundle = makeBundle()
 
-    expect(resolveWelcome(bundle, demoOccasion)).toBe('Bienvenida del sitio.')
-    expect(resolveWelcome(bundle)).toBe('Bienvenida del sitio.')
+    expect(resolveWelcome(bundle.site.welcome, demoOccasion)).toBe('Bienvenida del sitio.')
+    expect(resolveWelcome(bundle.site.welcome)).toBe('Bienvenida del sitio.')
   })
 
   it('trata una bienvenida vacía como ausente', () => {
     const bundle = makeBundle()
 
-    expect(resolveWelcome(bundle, { ...demoOccasion, welcome: '   ' })).toBe(
+    expect(resolveWelcome(bundle.site.welcome, { ...demoOccasion, welcome: '   ' })).toBe(
       'Bienvenida del sitio.',
     )
   })

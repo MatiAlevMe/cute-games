@@ -1,7 +1,7 @@
 # PLAN — regalo-publico
 
-**Slug:** `regalo-publico` · **Actualizado:** `2026-11-04`
-**Estado:** `P1–P4 completadas; P5 siguiente`
+**Slug:** `regalo-publico` · **Actualizado:** `2026-11-06`
+**Estado:** `P1–P5 completadas; P6 siguiente`
 **Puerta de privacidad:** [`PRIVACY.md`](PRIVACY.md) · **Repos:** [`REPOS.md`](REPOS.md)
 
 ## Objetivo
@@ -85,7 +85,7 @@ interface ContentBundle {
 | P2 | Contenido público y privado separados | ✅ |
 | P3 | Demo neutra y publicación de la plantilla | ✅ |
 | P4 | Contrato `ContentBundle` y migración | ✅ |
-| P5 | Menú por fecha y bienvenida | ⏳ |
+| P5 | Menú por fecha y bienvenida | ✅ |
 | P6 | Tema celeste y fallback original | ⏳ |
 | P7 | Mini-juego memoria del robot | ⏳ |
 | P8 | Mini-juego jardín de mensajes | ⏳ |
@@ -146,6 +146,9 @@ interface ContentBundle {
 - **Criterio de aceptación:** una fecha con varios regalos se muestra agrupada; la bienvenida es
   configurable y respeta la precedencia; el orden es estable; no hay scroll horizontal en 320, 375,
   768 y 1024 px; el recorrido por teclado funciona.
+- **Estado:** completada. La línea de tiempo agrupa regalos por ocasión, presenta la bienvenida de
+  cada ocasión o la del sitio como fallback, y formatea cada fecha calendario sin desfase UTC.
+- **Verificación:** typecheck, pruebas unitarias, E2E en las rutas y anchos de referencia, y build.
 
 ### P6 — Tema celeste y fallback original
 
@@ -199,3 +202,5 @@ interface ContentBundle {
   neutra.
 - `2026-11-04` — P4 completada: contrato `ContentBundle`, validador, orden y bienvenida
   deterministas, demo migrada y registro de vistas sin contenido.
+- `2026-11-06` — P5 completada: menú temporal por ocasión, bienvenida configurable, fechas locales,
+  orden estable, semántica de listas y cobertura unitaria/E2E.

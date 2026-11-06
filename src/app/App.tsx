@@ -2,8 +2,7 @@ import { useEffect, useRef } from 'react'
 import { GiftLayout } from '../components/GiftLayout'
 import { GiftMenu } from '../components/GiftMenu'
 import { RouteNotFound } from '../components/RouteNotFound'
-import { findGift, resolveWelcome, sortOccasions } from '../content/bundle'
-import { formatGiftDate } from '../content/date'
+import { findGift, sortOccasions } from '../content/bundle'
 import type { ContentBundle } from '../content/types'
 import { assertValidContentBundle } from '../content/validate'
 import { giftKinds, giftViewRegistry } from '../gifts/registry'
@@ -20,11 +19,6 @@ export function App({ bundle }: AppProps) {
   const mainRef = useRef<HTMLElement>(null)
   const previousHashRef = useRef<string | null>(null)
   const occasions = sortOccasions(bundle.occasions)
-  const firstOccasion = occasions[0]
-  const welcome = resolveWelcome(bundle, firstOccasion)
-  const dateLabel = firstOccasion
-    ? formatGiftDate(firstOccasion.date, bundle.site.locale)
-    : null
   const currentGift = route.name === 'gift' ? findGift(bundle, route.id) : undefined
 
   useEffect(() => {
@@ -74,9 +68,8 @@ export function App({ bundle }: AppProps) {
           <GiftMenu
             occasions={occasions}
             recipient={bundle.site.recipient}
-            welcome={welcome}
-            giftDate={firstOccasion?.date ?? null}
-            dateLabel={dateLabel}
+            siteWelcome={bundle.site.welcome}
+            locale={bundle.site.locale}
           />
         ) : route.name === 'gift' ? (
           <GiftRoute bundle={bundle} id={route.id} />

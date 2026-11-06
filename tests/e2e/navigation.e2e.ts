@@ -34,11 +34,14 @@ test('el menú muestra los cuatro regalos', async ({ page }) => {
 
   await expect(page).toHaveTitle(/Regalo para ti/)
   await expect(page.getByRole('heading', { level: 1, name: 'Regalo para ti' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: 'Demostración' })).toBeVisible()
   await expect(page.getByText('Explora los cuatro regalos de ejemplo.')).toBeVisible()
   await expect(page.locator('time')).toHaveAttribute('dateTime', '2026-01-01')
 
   const nav = page.getByRole('navigation', { name: 'Regalos' })
   await expect(nav.getByRole('link')).toHaveCount(4)
+  await expect(nav.locator('ol.occasion-timeline > li')).toHaveCount(1)
+  await expect(nav.locator('ul.gift-grid > li')).toHaveCount(4)
   await expect(nav.getByRole('link', { name: 'Carta' })).toHaveAttribute(
     'href',
     '#/regalo/carta',

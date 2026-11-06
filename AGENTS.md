@@ -13,8 +13,8 @@ Plantilla web para regalar: un menú con la fecha del regalo y cuatro vistas de 
 anillo y logro). El objetivo es que otra persona pueda clonar el repositorio, reemplazar el contenido
 y publicar su propio regalo sin tocar los componentes.
 
-**Estado actual:** fase 2 en curso. P1–P4 completadas (contrato `ContentBundle`, validador y
-migración de la demo); P5 siguiente. Licencia MIT.
+**Estado actual:** fase 2 en curso. P1–P5 completadas (contrato `ContentBundle`, migración de la
+demo y menú por fecha); P6 siguiente. Licencia MIT.
 
 El repositorio es la **plantilla pública**: no contiene contenido personal. El contenido real de un
 regalo vive en un repositorio privado derivado de esta plantilla.

@@ -24,7 +24,7 @@ navegación ni los componentes compartidos.
 - **Estilos y accesibilidad:** base implementada (F1-T09), verificada en Chrome; Safari/VoiceOver
   pendientes.
 - **Pruebas y release:** Vitest, Playwright y `validate:release` implementados (F1-T10).
-- **Fase 2:** en curso; P1–P4 completadas y P5 siguiente.
+- **Fase 2:** en curso; P1–P5 completadas y P6 siguiente.
 - **Privacidad:** este repositorio es público y solo contiene la demo. El contenido real de un regalo
   va en un repositorio privado derivado de la plantilla. Un repo privado no es control de acceso.
 - **Fecha y textos:** la demo usa una fecha y textos de ejemplo. El contenido real se edita en
@@ -61,10 +61,10 @@ proyecto, hay que detenerse y explicar antes de reemplazarla.
 
 No se resuelven componentes a partir de código arbitrario en datos. No hay sistema de plugins.
 
-Implementado hasta P4: arranque, shell, registro explícito de tipos, navegación hash, las cuatro
+Implementado hasta P5: arranque, shell, registro explícito de tipos, navegación hash, las cuatro
 vistas de contenido, una base de estilos accesible, pruebas E2E con Playwright y validación de
 release de fase 1. La fase 2 ya tiene el contrato `ContentBundle` con `site` y `occasions`, validador,
-orden determinista y precedencia de bienvenida; el menú por fecha es P5.
+orden determinista, precedencia de bienvenida y menú por línea de tiempo.
 
 ## Modelo de contenido
 

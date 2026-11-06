@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 2026-11-06
+
+- Se completa P5: `GiftMenu` presenta una línea de tiempo con secciones por ocasión, bienvenida con
+  precedencia de ocasión/sitio, fechas calendario `es-CL` sin desfase y regalos ordenados de forma
+  determinista.
+- Se conservan rutas hash, retorno, recuperación de rutas desconocidas, foco y navegación por teclado;
+  se añaden encabezados y listas semánticas y estilos adaptables.
+- Se amplían las pruebas unitarias y E2E para agrupación, orden, bienvenida, fechas y menú; la prueba
+  E2E confirma ausencia de scroll horizontal en 320, 375, 768 y 1024 px.
+- Se actualiza el estado de fase 2 en la documentación. `validate:release` permanece sin cambios
+  para P9.
+
 ## 2026-11-04
 
 - Se implementa P4: contrato `ContentBundle` con `site` y `occasions`, tipos `SiteConfig`, `Occasion` y
