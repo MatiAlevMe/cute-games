@@ -1,64 +1,56 @@
-import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { createServer } from 'vite'
+import { auditDist, validateBundleForMode } from './release-policy.mjs'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
+const modeArgument = process.argv.indexOf('--mode')
+const mode = modeArgument === -1 ? 'public' : process.argv[modeArgument + 1]
 const problems = []
 
-async function read(relativePath) {
-  return readFile(new URL(relativePath, new URL('../', import.meta.url)), 'utf8')
-}
-
-const site = await read('src/content/site.ts')
-const dateMatch = /giftDate:\s*(null|'([^']*)')/.exec(site)
-
-if (!dateMatch) {
-  problems.push('No se pudo leer giftDate en src/content/site.ts.')
-} else if (dateMatch[1] === 'null') {
-  problems.push('giftDate sigue en null: configura la fecha real del regalo.')
-} else {
-  const date = dateMatch[2]
-  const parts = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date)
-
-  if (!parts) {
-    problems.push(`giftDate "${date}" no usa el formato YYYY-MM-DD.`)
-  } else {
-    const parsed = new Date(Number(parts[1]), Number(parts[2]) - 1, Number(parts[3]))
-
-    if (
-      parsed.getFullYear() !== Number(parts[1]) ||
-      parsed.getMonth() !== Number(parts[2]) - 1 ||
-      parsed.getDate() !== Number(parts[3])
-    ) {
-      problems.push(`giftDate "${date}" no es una fecha calendario válida.`)
-    }
-  }
-}
-
-const textFiles = ['carta.txt', 'poema.txt', 'anillo.txt', 'logro.txt']
-
-for (const file of textFiles) {
-  const content = await read(`src/content/texts/${file}`)
-
-  if (content.trim().length === 0) {
-    problems.push(`src/content/texts/${file} está vacío.`)
-  } else if (/predeterminad/i.test(content)) {
-    problems.push(`src/content/texts/${file} todavía contiene el texto predeterminado.`)
-  }
-}
-
-const registry = await read('src/gifts/registry.ts')
-
-if (/content:\s*null/.test(registry)) {
-  problems.push('src/gifts/registry.ts todavía tiene un regalo con contenido pendiente.')
-}
-
-if (problems.length > 0) {
-  console.error('✗ Validación de release fallida:')
-  for (const problem of problems) {
-    console.error(`  - ${problem}`)
-  }
-  console.error(`\nDirectorio revisado: ${root}`)
+if (!mode || mode.startsWith('--')) {
+  console.error('✗ Indica el modo con --mode public o --mode personal.')
   process.exit(1)
 }
 
-console.log('✓ Validación de release OK: fecha, textos y contenido listos.')
+let server
+try {
+  server = await createServer({
+    configFile: path.join(root, 'vite.config.ts'),
+    root,
+    server: { middlewareMode: true },
+    appType: 'custom',
+  })
+
+  const [{ demoBundle }, { validateContentBundle }, { giftKinds }] = await Promise.all([
+    server.ssrLoadModule('/src/content/demo.ts'),
+    server.ssrLoadModule('/src/content/validate.ts'),
+    server.ssrLoadModule('/src/gifts/registry.ts'),
+  ])
+
+  const bundleResult = validateContentBundle(demoBundle, { knownKinds: giftKinds })
+  problems.push(...bundleResult.problems.map((problem) => `ContentBundle: ${problem}`))
+  problems.push(...validateBundleForMode(demoBundle, mode))
+
+  const audit = await auditDist(path.join(root, 'dist'), demoBundle)
+  problems.push(...audit.problems.map((problem) => `dist/: ${problem}`))
+
+  if (problems.length > 0) {
+    console.error(`✗ Validación de release (${mode}) fallida:`)
+    for (const problem of problems) console.error(`  - ${problem}`)
+    console.error('\nNo se ha publicado ni modificado ningún archivo.')
+    process.exitCode = 1
+  } else {
+    console.log(`✓ Release ${mode}: ContentBundle válido y dist/ auditado (${audit.files.length} archivos).`)
+    if (mode === 'personal') {
+      console.log('  Revisa dist/ localmente; este resultado no autoriza a publicar contenido personal.')
+    } else {
+      console.log('  La huella coincide con la demo neutra revisada.')
+    }
+  }
+} catch (error) {
+  console.error(`✗ No se pudo validar el release: ${error.message}`)
+  process.exitCode = 1
+} finally {
+  await server?.close()
+}
